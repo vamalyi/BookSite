@@ -1,0 +1,55 @@
+{% extends "catalogue/category.html" %}
+{% load display_tags %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+    <a href="/" class="dark">{% trans 'Головна' %}</a>
+    > <span class="dark">{% trans "Пошуковий запит" %}</span>
+    > <span class="coral">{{ search_query }}</span>
+{% endblock %}
+
+{% block sidebar_menu %}
+    <div class="filter-block">
+        <p class="coral">{% trans "Категорії" %}</p>
+        <ul>
+            {% for category in categories %}
+                {% if current_category_id == category.1 %}
+                    <li><strong>{{ category.0 }} ({{ category.2 }})</strong></li>
+                {% else %}
+                    <label class="checkbox-label">
+                        <a href="?{% get_parameters category %}category={{ category.1 }}" style="text-decoration:none">{{ category.0 }} <span>({{ category.2 }})</span></a>
+                    </label>
+                {% endif %}
+            {% endfor %}
+        {% if current_category_id %}
+            <a href="?{% get_parameters category %}">{% trans "Всі категорії" %} ({{ products_count }})</a>
+        {% else %}
+            <label class="checkbox-label">{% trans "Всі категорії" %} <span>({{ products_count }})</span></label>
+        {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block page_title %}
+    {% if not products %}
+        <p style="font-size:22px">
+            {% blocktrans %}По запиту <span class="coral">"{{ search_query }}"</span> нічого не знайдено{% endblocktrans %}
+        </p>
+    {% else %}
+        <p style="font-size:22px">
+            {% blocktrans %}Пошуковий запит <span class="coral">"{{ search_query }}"</span>{% endblocktrans %}
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block first_text %}
+{% endblock %}
+
+{% block second_text %}
+{% endblock %}
+
+{% block filter %}
+{% endblock %}
+
+{% block sort_block %}
+{% endblock %}

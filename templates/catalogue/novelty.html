@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load display_tags %}
+{% load history_tags %}
+
+{% block content %}
+
+<!-- ARTICLE -->
+
+<article id="article">
+    <div class="container">
+        <div class="row">
+            <div class="article-block col-sm-12">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <div class="row">
+
+                            {% include "partials/category_menu.html" %}
+
+                            <div class="col-sm-12">
+
+                                <!-- BREADCRUMBS -->
+
+                                <div class="breadcrumbs">
+                                    {% block breadcrumbs %}
+                                    <a href="/" class="dark">{% trans 'Головна' %}</a>
+                                    > <span class="coral">Новинки</span>
+                                    {% endblock %}
+                                </div>
+
+                                <!-- PRODUCT TITLE -->
+
+                                <div class="article-title product-page">
+                                    {% block page_title %}
+                                    <p class="dark">Наші новинки</p>
+                                    {% endblock %}
+                                </div>
+
+                                {% for product in products %}
+                                <div class="product-catalog col-sm-12">
+                                    <div class="row">
+                                        <div class="col-sm-3 text-center">
+                                            <a href="{{ product.get_absolute_url }}">
+                                                {% if product.sale.image %}
+                                                <img class="product-sale" src="{{ MEDIA_URL }}{{ product.sale.image }}" alt="скидка" style="z-index:10000;bottom:125px;left:15px;position:absolute;box-shadow:none">
+                                                {% endif %}
+                                                {% if product.images.count > 0 %}
+                                                <img src="{{ product.images.first.small_image }}" alt="купить {{ product.name }}">
+                                                {% else %}
+                                                <img src="{% static " images/none.png" %}" alt="купить {{ product.name }}">
+                                                {% endif %}
+                                            </a>
+                                            <div class="article-catalog-price text-center">
+                                                {% if product.sale %}
+                                                    <strike class="price">{{ product.default_price|floatformat:'2' }}</strike>
+                                                {% endif %}
+                                                <span>{% blocktrans with price=product.get_default_price|floatformat:'2' %}{{ price }} <span>грн</span>{% endblocktrans %}</span>
+                                                {% if product.id in cart_products %}
+                                                    <a class="product_in_basket" href="{% url 'basket' %}">
+                                                        <button class="article-button"><img src="{% static "images/article-cart-ico-ok.png" %}" alt=""></button>
+                                                    </a>
+                                                {% else %}
+                                                <a href="{{ product.get_absolute_url }}"><button data-id="{{ product.id }}" type="button" name="article-button" class="article-button">
+                                                    <img src="{% static "images/article-cart-ico.png" %}" alt="">
+                                                </button></a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <ul>
+                                                {% if product.article %}
+                                                <li><span>{% trans "Код товара" %}:</span> {{ product.article }}</li>
+                                                {% endif %}
+                                                {% if product.authors %}
+                                                <li>
+                                                    <span>{% trans "Автор" %}:</span>
+                                                    {% for author in product.authors.all %}
+                                                    <a class="coral" href="{% url 'search:author_filter' mfa=author.slug %}">
+                                                    {{ author.name }}
+                                                    </a>{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </li>
+                                                {% endif %}
+                                                {% if product.series %}
+                                                <li>
+                                                    <span>{% trans "Серія" %}:</span>
+                                                    <a class="coral" href="{% url 'search:series_filter' mfa=product.series.slug %}">
+                                                    {{ product.series.name }}
+                                                    </a>
+                                                </li>
+                                                {% endif %}
+                                                {% for item in product.parameter_values.all %}
+                                                <li>
+                                                    <span>
+                                                        {{ item.product_parameter.name }}:
+                                                        {% if item.product_parameter.name == 'Тип видання' or item.product_parameter.name == 'Предмет' %}
+                                                            <a class="coral" href="{% url 'search:parameter' %}?q={{ item.value.value|urlencode }}">
+                                                            {{ item.value.value }}</a>
+                                                        {% else %}
+                                                            {{ item.value.value }}
+                                                        {% endif %}
+                                                    </span>
+                                                </li>
+                                                {% endfor %}
+                                                {% if product.code %}
+                                                <li><span>{% trans "ISBN" %}:</span> {{ product.code }}</li>
+                                                {% endif %}
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6 border">
+                                            <p class="title"><a href="{{ product.get_absolute_url }}" class="dark">
+                                                {{ product.name }}</a></p>
+                                            <p>{{ product.first_text|safe }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="pagination">
+
+                                {% include "catalogue/partials/pagination.html" %}
+
+                            </div>
+                            <div class="article-title">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p class="coral">Останні перегляди</p>
+                                    </div>
+                                    <div class="col-sm-8 line product-page"></div>
+                                </div>
+                            </div>
+                            <div class="article-catalog col-sm-12">
+                                {% block recently_products %}
+                                {% recently_viewed_products %}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="aside-menu col-sm-2 text-center">
+                        <p class="white">Швидкий пошук</p>
+                        <ul>
+                            {% for word in fast_search_words %}
+                                <li><a href="{% url 'search:search' %}?q={{ word|urlencode:"" }}" class="dark">{{ word }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </div>
+        <div id="back-top" class="col-sm-12 text-center">
+            <a href="#top"><img src="{% static 'images/scroll-back-ico.png' %}" alt="вверх"></a>
+        </div>
+    </div>
+</article>
+<script type="text/javascript" src="{% static 'system/js/product_list.js' %}"></script>
+{% endblock %}
+{% block extra_scripts %}
+<script type="text/javascript">
+
+    // SLIDER
+
+    $(window).load(function () {
+        $('.flexslider-recent').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 150,
+            itemMargin: 0,
+            minItems: 6,
+            maxItems: 6
+        });
+    });
+
+    var csrftokenn = function (context) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, context.length + 1) == (context + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(context.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }('csrftoken');
+    $('.product_buy').click(function () {
+        var t = this;
+        $.post("/api/add_product/",
+                {
+                    'id': this.dataset.id,
+                    'price_corrector_id': this.dataset.corrector,
+                    'count': this.dataset.count,
+                    'csrfmiddlewaretoken': csrftokenn
+                },
+                function (data) {
+                    console.log(t.dataset.id, csrftokenn, data);
+                    if (data.result === true) {
+                        $(t).parent().html('<a class="product_in_basket" href="/basket/">{% trans "In basket" %}</a>');
+                        var basket_count_span = $('#basket_count');
+                        if (basket_count_span.html() != undefined) {
+                            basket_count_span.html(data.data.count);
+                        } else {
+                            $('#global_basket_button').append('<span id="basket_count">1</span>');
+                        }
+                        console.log(data.data.count, $(t).parent());
+                    }
+                })
+    });
+    function removeParam(key, sourceURL) {
+        var rtn = sourceURL.split("?")[0],
+                param,
+                params_arr = [],
+                queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+        if (queryString !== "") {
+            params_arr = queryString.split("&");
+            for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+                param = params_arr[i].split("=")[0];
+                if (param === key) {
+                    params_arr.splice(i, 1);
+                }
+            }
+            rtn = rtn + "?" + params_arr.join("&");
+        }
+        return rtn;
+    }
+
+</script>
+{% endblock %}

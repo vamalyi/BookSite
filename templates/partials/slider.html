@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load staticfiles %}
+
+{% if banners %}
+    <div class="container flexslider">
+        <ul class="slides">
+            {% for banner in banners %}
+                <li>
+                    <img src="/media/{{ banner.image_original }}" alt="{{ banner.name }}" />
+    {#                <input type="button" value="Подробнее">#}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="custom-navigation">
+        <a href="#" class="flex-prev">{% trans "Preview" %}</a>
+        <div class="custom-controls-container"></div>
+        <a href="#" class="flex-next">{% trans "Next" %}</a>
+    </div>
+{% endif %}

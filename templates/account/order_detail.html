@@ -1,0 +1,18 @@
+{% extends "account/profile_base.html" %}
+{% load i18n %}
+
+{% block tabcontent %}
+    <table class="table table-striped">
+        {% for order_item in order.order_items.all %}
+            <tr>
+                <td><img src="{{ order_item.product.images.all.0.image_small }}"
+                         alt="{{ order_item.product.name }}"></td>
+                <td>{{ order_item.product.name }}</td>
+                <td>{{ order_item.product.get_default_price }}</td>
+                <td></td>
+                <td>{{ order_item.count }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a class="btn btn-info btn-lg" onclick="javascript:history.go(-1);">< {% trans "Back" %}</a>
+{% endblock tabcontent %}

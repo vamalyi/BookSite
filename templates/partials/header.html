@@ -1,0 +1,53 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load mptt_tags %}
+{% load menu %}
+
+<!-- HEADER -->
+
+<header id="header">
+    <div class="container" style="background: #fff">
+        <div class="row">
+            <div class="navbar-header col-sm-4" style="padding-left:0;margin-left:-1px">
+                <a href="/"><img src="{% static "images/header-bg-2.png" %}" alt=""></a>
+            </div>
+            <div class="col-sm-8" style="padding-bottom: 2px; padding-top: 56px">
+                <div class="row">
+                    <div class="col-sm-3 header-block">
+                        {% if user.is_authenticated %}
+                            <p class="coral"><a href="{% url "account:profile" %}" style="color:#ee414f;">Доброго дня, {{ user }}</a></p>
+                            <p class="coral"><a href="{% url "account:profile" %}" class="dark">Особистий кабінет</a></p>
+                        {% else %}
+                            <p><img src="{% static "images/header-ico-1.png" %}" alt="Увійти"><a href="{% url "account:login_registration" %}" class="coral">Увійти</a></p>
+                            <p><a href="{% url "account:login_registration" %}" class="dark">Зареєструватися</a></p>
+                        {% endif %}
+                    </div>
+                    <div class="col-sm-3 header-block" style="padding-left:0">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <a href="{% url 'basket' %}" style="color:#ee414f;"><img src="{% static "images/header-ico-2.png" %}" alt="Перейти до покупок"></a>
+                            </div>
+                            <div class="col-sm-10">
+                                <p class="coral" style="line-height: 1"><a href="{% url 'basket' %}" style="color:#ee414f;">Товарів: <span id="basket_count">{{ basket_count }}</span></a></p>
+                                <p><a href="{% url 'basket' %}" class="dark">Перейти до покупок</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% include "_sys-header.html" %}
+
+                    {% include "partials/main_menu.html" %}
+                    
+                    <div class="col-sm-3 header-search" style="padding-right: 0">
+                        <form action="{% url 'search:search' %}" method="get">
+                            <input type="text" name="q" class="search" placeholder="Пошук...">
+                            <button type="submit" class="search-button">
+                                <img src="{% static "images/search-ico.png" %}" alt="пошук">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

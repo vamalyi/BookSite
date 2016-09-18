@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<article id="article">
+    <div class="container">
+        <div class="row">
+            <div class="article-block col-sm-12">
+                <div class="row">
+                    {% block layout %}{% endblock %}
+                </div>
+            </div>
+            <div id="back-top" class="col-sm-12 text-center">
+                <a href="#top"><img src="{% static "images/scroll-back-ico.png" %}" alt="наверх"></a>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock content %}

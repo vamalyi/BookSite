@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="login-reg row" style="margin: 60px 0">
+        <div class="col-sm-4 col-sm-offset-2">
+            <h2 style="font-size: 2em;margin-bottom:20px;">{% trans "Увійти" %}</h2>
+            {% if login_form.non_field_errors %}
+                {% for error in login_form.non_field_errors %}
+                    <div class="alert alert-error control-group error col-md-8 col-md-offset-2">
+                        <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form id="login_form" action="{% url "account:login_registration" %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {#{{ login_form.username.label_tag }}#}
+                    {{ login_form.username }}
+                    {% for error in login_form.username.errors %}
+                        <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {#{{ login_form.password.label_tag }}#}
+                    {{ login_form.password }}
+                    {% for error in login_form.password.errors %}
+                        <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="hidden">{{ login_form.redirect_url }}</div>
+                <button name="login_submit" type="submit" value="{% trans "Увійти" %}">
+                    {% trans 'Увійти' %}</button>
+            </form>
+        </div>
+        <div class="col-sm-4">
+            <h2 style="font-size: 2em;margin-bottom:20px;">{% trans "Зареєструватися" %}</h2>
+            {% if registration_form.non_field_errors %}
+                {% for error in registration_form.non_field_errors %}
+                    <div class="alert alert-error control-group error col-md-8 col-md-offset-2">
+                        <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form id="registration_form" action="{% url "account:login_registration" %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {#{{ registration_form.email.label_tag }}#}
+                    {{ registration_form.email }}
+                    {% for error in registration_form.email.errors %}
+                        <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {#{{ registration_form.username.label_tag }}#}
+                    {{ registration_form.username }}
+                    {% for error in registration_form.username.errors %}
+                        <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {#{{ registration_form.password1.label_tag }}#}
+                    {{ registration_form.password1 }}
+                    {% for error in registration_form.password1.errors %}
+                        <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {#{{ registration_form.password2.label_tag }}#}
+                    {{ registration_form.password2 }}
+                    {% for error in registration_form.password2.errors %}
+                        <span class="error-block"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="hidden">{{ registration_form.redirect_url }}</div>
+                <button name="registration_submit" type="submit" value="{% trans 'Зареєструватися' %}">
+                    {% trans 'Зареєструватися' %}</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}

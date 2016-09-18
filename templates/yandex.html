@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+{#<yml_catalog date="2010-04-01 17:00">#}
+<yml_catalog date="{{ now_time }}">
+    <shop>
+        <name>{{ shop_name }}</name>
+        <company>{{ company_name }}</company>
+        <url>{{ shop_url }}/</url>
+        <currencies>
+            <currency id="UAH" rate="1"/>
+        </currencies>
+        <categories>
+            {% for category in categories %}
+                {% if category.parent_id %}
+                    <category id="{{ category.id }}" parentId="{{ category.parent_id }}">{{ category.name }}</category>
+                {% else %}
+                    <category id="{{ category.id }}">{{ category.name }}</category>
+                {% endif %}
+            {% endfor %}
+        </categories>
+        <delivery-options>
+            {% for delivery in deliveries %}
+                <option cost="{{ delivery.price }}" days="1-3" />
+            {% endfor %}
+        </delivery-options>
+        <offers>
+            {% for product in products %}
+                <offer id="{{ product.id }}" type="vendor.model">
+                    <url>{{ shop_url }}{% url "product_detail" product.url %}</url>
+                    <price>{{ product.get_default_price }}</price>
+                    <oldprice>{{ product.get_default_price_without_sale }}</oldprice>
+                    <currencyId>UAH</currencyId>
+                    <categoryId>{{ product.category_id }}</categoryId>
+                    {% for image in product.images.all %}
+                        <picture>{{ shop_url }}{{ image.image_original.url }}</picture>
+                    {% endfor %}
+                    <vendor>{{ product.manufacturer.name }}</vendor>
+                    <model>{{ product.name }}</model>
+                    <description>{{ product.description }}</description>
+                    <sales_notes>Минимальная партия заказа 1 ед.</sales_notes>
+                    {% for parameter in product.parameter_values.all %}
+                        <param name="{{ parameter.product_parameter.name }}">{{ parameter.value.value }}</param>
+                    {% endfor %}
+                </offer>
+            {% endfor %}
+        </offers>
+    </shop>
+</yml_catalog>

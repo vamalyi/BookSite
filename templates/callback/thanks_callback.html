@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="container-fluid" style="margin-top:50px;">
+        <div class="container">
+            <div class="row midle-wrap-text clearfix">
+                <div class="col-sm-12">
+                <p style="text-align: center; font-size: 1.7em;">{% trans "Ваш запрос принят в обработку!" %}<br />
+                    <br />
+                    {% trans "В ближайшее время с Вами свяжется наш менеджер." %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

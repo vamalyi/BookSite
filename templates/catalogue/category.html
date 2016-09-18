@@ -1,0 +1,376 @@
+{% extends "layout.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load display_tags %}
+{% load history_tags %}
+
+{% block layout %}
+
+{% block extra_styles %}
+<style>
+    #article .article-block .article-catalog .article-catalog-image img { left: 15% }
+    #article .article-block .navbar-nav ul li:nth-child(1) { margin-left: 0 }
+    #article .article-block .navbar-nav ul li { padding: 12px 14px }
+</style>
+{% endblock %}
+<!-- ARTICLE -->
+
+<div class="filters col-sm-3">
+    {% block sidebar_menu %}
+        {% if prefilter_from_catagory.prefilters.exists %}
+            <div class="filter-block">
+                <p class="coral">{% trans "Filter" %}</p>
+                <ul>
+                    {% for prefilter in prefilter_from_catagory.prefilters %}
+                        <li><a href="{% url "catalogue:category_list" prefilter.url %}">
+                            {% if prefilter.url in request.path %}
+                                <strong>{{ prefilter.name }}</strong>
+                            {% else %}
+                                {{ prefilter.name }}
+                            {% endif %}
+                        </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <form name="form_filter" action="{{ category.get_absolute_url }}" method="GET"> 
+            {% regroup filters|dictsort:"product_parameter__weight" by product_parameter__name as parameter_list %}
+            {% for parameter in parameter_list %}
+                <div class="filter-block">
+                    <p class="coral">{{ parameter.grouper }}</p>
+                    {% for item in parameter.list|dictsort:"weight" %}
+                        <input onchange="form_filter.submit();"
+                               id="label_{{ item.product_parameter }}_{{ item.id }}"
+                               type="checkbox" name="{{ item.product_parameter }}"
+                               class="checkbox"
+                               value="{{ item.id }}" {% if item.checked %}checked{% endif %}>
+                        <label for="label_{{ item.product_parameter }}_{{ item.id }}"
+                               class="checkbox-label"
+                               title="{{ item.value }}">{{ item.value }}&nbsp;<span>({% if item.plus %}+{% endif %}{{ item.value_count }})</span></label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <div class="filter-block">
+                <p class="dark">{% trans "По ціні:" %}</p>
+                <input id="price-from" name="price_from"
+                       value="{{ price_from|floatformat:'0'|default:"0" }}"
+                       type="text"
+                       onblur='if (this.value == "") this.value = "0"'
+                       onfocus='if (this.value == "0") this.value = ""'>
+                <label for="price-to">—</label>
+                <input id="price-to" name="price_to" value="{{ price_to|floatformat:'0' }}" type="text"
+                       onblur='if (this.value == "") this.value = "{{ price_to|floatformat:'0' }}"'
+                       onfocus='if (this.value == "{{ price_to|floatformat:'0' }}") this.value = ""'>
+                <input id="button" class="button" type="submit" value="OK" style="padding: 0;">
+            </div>
+        </form>
+    {% endblock %}
+</div>
+<div class="col-sm-9">
+    <div class="row">
+        
+        {% include "partials/category_menu.html" %}
+        
+        <div class="col-sm-12">
+
+            <!-- BREADCRUMBS -->
+
+            <div class="breadcrumbs">
+                {% block breadcrumbs %}
+                    <a href="/" class="dark">{% trans 'Головна' %}</a>
+                    {% if prefilter %}
+                        > <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                        > <span>{{ prefilter.name }}</span>
+                    {% else %}
+                        > <span class="coral"><strong>{{ category.name }}</strong></span>
+                    {% endif %}
+                {% endblock %}
+            </div>
+            <div class="col-sm-12">
+                <div class="article-title product-page catalog col-sm-7">
+                    {% block page_title %}
+                        {% if prefilter %}
+                            <h1 class="dark">{{ prefilter.name }}</h1>
+                        {% else %}
+                            <h1 class="dark">{{ category.name }}</h1>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+                {% block sort_block %}
+                    <div class="col-sm-2 text-right">
+                        <p class="sort">{% trans "Сортування:" %}</p>
+                    </div>
+                    <div id="dd" class="wrapper-dropdown col-sm-3" tabindex="1">
+                        {% if order == 'weight' %}
+                            {% trans "За замовчуванням" %}
+                        {% elif order == 'default_price_sm' %}
+                            {% trans "Від дешевих" %}
+                        {% elif order == '-default_price_sm' %}
+                            {% trans "Від дорогих" %}
+                        {% elif order == 'name' %}
+                            {% trans "Від А до Я" %}
+                        {% elif order == '-name' %}
+                            {% trans "Від Я до А" %}
+                        {% elif order == '-date_on_add' %}
+                            {% trans "Нові товари" %}
+                        {% else %}
+                            {% trans "За замовчуванням" %}
+                        {% endif %}
+                        <ul class="dropdown">
+                            {% if order != 'weight' %}
+                                <li><a href="?{% get_parameters order %}order=weight">{% trans "За замовчуванням" %}</a></li>
+                            {% endif %}
+                            {% if order != 'default_price_sm' %}
+                                <li><a href="?{% get_parameters order %}order=price_ASC">{% trans "Від дешевих" %}</a></li>
+                            {% endif %}
+                            {% if order != '-default_price_sm' %}
+                                <li><a href="?{% get_parameters order %}order=price_DESC">{% trans "Від дорогих" %}</a></li>
+                            {% endif %}
+                            {% if order != 'name' %}
+                                <li><a href="?{% get_parameters order %}order=name_ASC">{% trans "Від А до Я" %}</a></li>
+                            {% endif %}
+                            {% if order != '-name' %}
+                                <li><a href="?{% get_parameters order %}order=name_DESC">{% trans "Від Я до А" %}</a></li>
+                            {% endif %}
+                            {% if order != '-date_on_add' %}
+                                <li><a href="?{% get_parameters order %}order=date_ASC">{% trans "Нові товари" %}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endblock %}
+            </div>
+
+            <!-- FILTER BLOCKS -->
+
+            {% block filter %}
+                <div class="article-filter-blocks col-xs-12">
+                    {% if not prefilter %}
+
+                        {% for filter in filters|dictsort:"product_parameter__weight" %}
+                            {% if filter.checked %}
+                                <div class="article-blocks">
+                                    <p>{{ filter.value }}</p>
+                                    <a href="?{% get_parameters filter.product_parameter filter.id %}"><img
+                                            src="{% static "images/close-ico.png" %}" alt="скинути"></a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% if is_params %}
+                            <div class="article-blocks-button">
+                                <a href="?{% del_parameters filters %}">{% trans "Скинути" %}</a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                    <div class="article-blocks-info">
+                        <p>
+                            {% blocktrans %}
+                                Підібрано {{ products_count }} з {{ all_products_count }} товарів
+                            {% endblocktrans %}
+                        </p>
+                    </div>
+                </div>
+            {% endblock %}
+            {% for product in products %}
+                <div class="article-catalog col-sm-3">
+                    {% include 'catalogue/partials/product_item.html' %}
+                </div>
+            {% endfor %}
+            <div class="pagination">
+                
+                {% include "catalogue/partials/pagination.html" %}
+
+                <div id="dd-bottom" class="wrapper-dropdown bottom col-sm-1" tabindex="1">
+                    {% if product_on_page == '12' %}
+                        {% trans "12 товарів" %}
+                    {% elif product_on_page == '24' %}
+                        {% trans "24 товарів" %}
+                    {% elif product_on_page == 'all' %}
+                        {% trans "Усі товари" %}
+                    {% else %}
+                        {% trans "12 товарів" %}
+                    {% endif %}
+                    <ul class="dropdown">
+                        {% if product_on_page != '12' %}
+                            <li><a id="product_on_page_12" href="">{% trans "12 товарів" %}</a></li>
+                        {% endif %}
+                        {% if product_on_page != '24' %}
+                            <li><a id="product_on_page_24" href="#">{% trans "24 товарів" %}</a></li>
+                        {% endif %}
+                        {% if product_on_page != 'all' %}
+                            <li><a id="product_on_page_all" href="#">{% trans "Усі товари" %}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="article-title">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="coral">Останні перегляди</p>
+                    </div>
+                    <div class="col-sm-8 line product-page"></div>
+                </div>
+            </div>
+            
+            <div class="article-catalog col-sm-12">
+                {% block recently_products %}
+                    {% recently_viewed_products %}
+                {% endblock %}
+            </div>            
+        </div>
+    </div>
+</div>
+<div class="col-sm-12">
+    <div class="line-gray"></div>
+
+    <!-- TEXT -->
+
+    {% block first_text %}
+        {% if prefilter %}
+            {{ prefilter.first_text|safe }}
+        {% else %}
+            {{ category.first_text|safe }}
+        {% endif %}
+    {% endblock %}
+    
+</div>
+
+<script src="{% static 'js/jquery.1.7.1.min.js' %}"></script>
+<script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
+<script type="text/javascript" src="{% static 'system/js/product_list.js' %}"></script>
+{% endblock %}
+{% block extra_scripts %}
+<script type="text/javascript">
+
+    // POP UP
+
+    $(document).ready(function(){
+        PopUpHide();
+    });
+    function PopUpShow(){
+        $("#popup").fadeIn(200);
+    }
+    function PopUpHide(){
+        $("#popup").hide();
+    }
+
+    // SLIDER
+
+    $(window).load(function() {
+        $('.flexslider-recent').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 150,
+            itemMargin: 0,
+            minItems: 6,
+            maxItems: 6
+        });
+    });
+
+    // SCROLL BACK
+
+    $(document).ready(function(){
+        $("#back-top").hide();
+        $(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 600) {
+                    $('#back-top').fadeIn();
+                } else {
+                    $('#back-top').fadeOut();
+                }
+            });
+        
+        $('#back-top a').click(function () {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+            });
+        });
+    });
+
+    // DROPDOWN
+
+    function DropDown(el) {
+        this.dd = el;
+        this.initEvents();
+    }
+    DropDown.prototype = {
+        initEvents : function() {
+            var obj = this;
+            obj.dd.on('click', function(event){
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            }); 
+        }
+    }
+
+    $(function() {
+        var dd = new DropDown( $('#dd') );
+        $(document).click(function() {
+            $('.wrapper-dropdown-catalog').removeClass('active');
+        });
+    });
+    $(function() {
+        var dd = new DropDown( $('#dd-bottom') );
+        $(document).click(function() {
+            $('.wrapper-dropdown-catalog').removeClass('active');
+        });
+    });
+    
+    var csrftokenn = function (context) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, context.length + 1) == (context + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(context.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }('csrftoken');
+    $('.product_buy').click(function () {
+        var t = this;
+        $.post("/api/add_product/",
+                {
+                    'id': this.dataset.id,
+                    'price_corrector_id': this.dataset.corrector,
+                    'count': this.dataset.count,
+                    'csrfmiddlewaretoken': csrftokenn
+                },
+                function (data) {
+                    console.log(t.dataset.id, csrftokenn, data);
+                    if (data.result === true) {
+                        $(t).parent().html('<a class="product_in_basket" href="/basket/">{% trans "In basket" %}</a>');
+                        var basket_count_span = $('#basket_count');
+                        if (basket_count_span.html() != undefined) {
+                            basket_count_span.html(data.data.count);
+                        } else {
+                            $('#global_basket_button').append('<span id="basket_count">1</span>');
+                        }
+                        console.log(data.data.count, $(t).parent());
+                    }
+                })
+    });
+    function removeParam(key, sourceURL) {
+        var rtn = sourceURL.split("?")[0],
+                param,
+                params_arr = [],
+                queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+        if (queryString !== "") {
+            params_arr = queryString.split("&");
+            for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+                param = params_arr[i].split("=")[0];
+                if (param === key) {
+                    params_arr.splice(i, 1);
+                }
+            }
+            rtn = rtn + "?" + params_arr.join("&");
+        }
+        return rtn;
+    }
+</script>
+{% endblock %}

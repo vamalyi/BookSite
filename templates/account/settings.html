@@ -1,0 +1,23 @@
+{% extends "account/profile_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block tabcontent %}
+    <div class="col-sm-4 col-sm-offset-4">
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-error control-group error col-md-8 col-md-offset-2">
+                    <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form id="login_form" action="{% url "account:settings" %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary" style="margin-top: 20px;">
+                {% trans 'Save' %}</button>
+{#            <a style="margin-top: 20px;" id="logout" href="{% url 'account:logout' %}" class="btn btn-danger">{% trans 'Log out' %}</a>#}
+            {#<a style="margin-top: 20px;" id="cancel" href="{% url 'account:profile' %}" class="btn btn-warning">{% trans 'Cancel' %}</a>#}
+        </form>
+    </div>
+{% endblock tabcontent %}

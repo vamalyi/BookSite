@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: / 
+Disallow: /api/
+Disallow: /callback/
+Disallow: /thanks_callback/
+Disallow: /basket/
+Disallow: /accounts/
+Disallow: /search/
+Disallow: /admin/
+Disallow: /*?

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load thumbnail %}
+
+{% block content %}
+    <div id="article">
+        <div class="container">
+            <div class="row">
+                {% for news in news_list %}
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p><a href="{{ news.get_absolute_url }}"><h3>{{ news.title }}</h3></a></p>
+                            </div>
+                            <div class="col-sm-2">
+                                {% thumbnail news.main_image 160x160 upscale as thumb %}
+                                <img src="{{ thumb.url }}"  alt="{{ news.main_image_title }}"
+                             title="{{ news.main_image_description }}"/>
+                            </div>
+                            <div class="col-sm-10">
+                                <p>{{ news.body|truncatewords_html:42|safe }}
+                                    <a href="{{ news.get_absolute_url }}"><b>{% trans "[ read more ]" %}</b></a></p>
+                                <br/>
+                                <p><i>{{ news.owner }}</i> -- <b>{{ news.created_date }}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

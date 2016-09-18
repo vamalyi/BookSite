@@ -1,0 +1,14 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block title %}
+{% trans 'Страница не найдена' %} | {{ block.super }}
+{% endblock %}
+
+{% block error_heading %}
+{% trans "Страница не найдена" %}
+{% endblock %}
+
+{% block error_message %}
+<p>{% trans "Извините, но запрашиваемая страница не найдена." %}</p>
+{% endblock %}

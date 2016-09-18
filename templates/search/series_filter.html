@@ -1,0 +1,20 @@
+{% extends "search/author_filter.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load display_tags %}
+
+{% block breadcrumbs %}
+    <a href="/" class="dark">{% trans "Головна" %}</a>
+    > {% trans "Серія:" %}
+    {% if series %}
+        <a href="{% url "search:series_filter" mfa=series.slug %}" class="coral"><strong>{{ series.name }}</strong></a>
+    {% endif %}
+{% endblock %}
+
+{% block page_title %}
+    {% if series %}
+    <p style="font-size:22px">
+        {% trans "Серія" %} <span class="coral">"{{ series.name }}"</span>
+    </p>
+    {% endif %}
+{% endblock %}

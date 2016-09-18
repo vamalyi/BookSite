@@ -1,0 +1,53 @@
+{% extends "catalogue/category.html" %}
+{% load display_tags %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+    <a href="/" class="dark">{% trans "Головна" %}</a>
+    > {% trans "Автор:" %}
+    {% if author %}
+        <a href="{% url "search:author_filter" mfa=author.slug %}" class="coral"><strong>{{ author.name }}</strong></a>
+    {% endif %}
+{% endblock %}
+
+{% block sidebar_menu %}
+    <div class="filter-block">
+        <p class="coral">{% trans "Категорії" %}</p>
+        <ul>
+            {% for category in categories %}
+                {% if current_category_id == category.1 %}
+                    <li><strong>{{ category.0 }} ({{ category.2 }})</strong></li>
+                {% else %}
+                    <label class="checkbox-label">
+                        <a href="?{% get_parameters category %}category={{ category.1 }}" style="text-decoration:none">{{ category.0 }} <span>({{ category.2 }})</span></a>
+                    </label>
+                {% endif %}
+            {% endfor %}
+        {% if current_category_id %}
+            <a href="?{% get_parameters category %}">{% trans "Всі категорії" %} ({{ products_count }})</a>
+        {% else %}
+            <label class="checkbox-label">{% trans "Всі категорії" %} <span>({{ products_count }})</span></label>
+        {% endif %}
+        </ul>
+    </div>
+{% endblock %}
+
+{% block page_title %}
+    {% if author %}
+    <p style="font-size:22px">
+        {% trans "Автор" %} <span class="coral">"{{ author.name }}"</span>
+    </p>
+    {% endif %}
+{% endblock %}
+
+{% block first_text %}
+{% endblock %}
+
+{% block second_text %}
+{% endblock %}
+
+{% block filter %}
+{% endblock %}
+
+{% block sort_block %}
+{% endblock %}

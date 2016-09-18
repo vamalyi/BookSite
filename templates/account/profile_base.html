@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <style>
+        a, p {
+            font-family:'Open Sans Regular';
+        }
+    </style>
+    <div id="article" class="product">
+        <div class="container">
+            <div class="row">
+                <div class="article-block col-sm-12">
+                    {% block back %}
+                        <p style="color:#e0394a;margin:15px">< <a href="{% url "account:profile" %}" style="color:#e0394a">{% trans "Назад" %}</a></p>
+                    {% endblock %}
+
+                    {% block tabcontent %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

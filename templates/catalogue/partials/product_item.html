@@ -1,0 +1,59 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load parameters %}
+
+{# <a href="/admin/webshop/product/{{ product.id }}/">Редагувати</a> #}
+<div class="article-catalog-image">
+    <a href="{{ product.get_absolute_url }}">
+        {% if icon == "hit" %}
+            <!-- <img class="product-hit" src="{% static "images/hit-ico.png" %}" alt=""> -->
+        {% endif %}
+        {% if icon == "sale" %}
+            <img class="product-sale" src="{% static "images/sale-ico.png" %}" alt="скидка">
+        {% endif %}
+        {% if icon == "new" %}
+            <img class="product-new" src="{% static "images/new-ico.png" %}" alt="новинка">
+        {% endif %}
+        {% if product.sale.image %}
+            <img class="product-sale" src="/media/{{ product.sale.image }}" alt="скидка" style="box-shadow:none;z-index:10000;top:50%;right:-15px">
+        {% endif %}
+        {% if product.images.count > 0 %}
+            <img src="{{ product.images.first.small_image }}" alt="купить {{ product.name }}">
+        {% else %}
+            <img src="{% static "images/none.png" %}" alt="купить {{ product.name }}">
+        {% endif %}
+    </a>
+</div>
+{% if not display == 'only_image' %}
+<div>
+    <a href="{{ product.get_absolute_url }}">
+        <p class="article-catalog-name dark">{{ product.name }}</p>
+    </a>
+    {% comment %}
+        {% for item in product.parameter_values.all %}
+            <p class="article-catalog-author"><span>{{ item.product_parameter.name }}:</span> {{ item.value.value }}</p>
+        {% endfor %}
+    {% endcomment %}
+    <p class="article-catalog-author" style="white-space:nowrap;text-overflow:ellipsis;overflow:hidden;"><span>Автор:</span>
+        {% for author in product.authors.all %}
+            {{ author.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p class="article-catalog-author"><span>Серія:</span> {{ product.series }}</p>
+</div>
+<div class="article-catalog-price text-center">
+    {% if product.sale %}
+        <strike class="price" style="left: 47px;">{{ product.default_price|floatformat:'2' }}</strike>
+    {% endif %}
+    <span>{% blocktrans with price=product.get_default_price|floatformat:'2' %}{{ price }} <span>грн</span>{% endblocktrans %}</span>
+    {% if product.id in cart_products %}
+        <a class="product_in_basket" href="{% url 'basket' %}">
+            <button class="article-button"><img src="{% static "images/article-cart-ico-ok.png" %}" alt=""></button>
+        </a>
+    {% else %}
+    <a href="{{ product.get_absolute_url }}"><button data-id="{{ product.id }}" type="button" name="article-button" class="article-button">
+        <img src="{% static "images/article-cart-ico.png" %}" alt="">
+    </button></a>
+    {% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,203 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load history_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=1200, initial-scale=0">
+        {% autoescape off %}
+            {% if seo.meta_description %}
+                <meta name="description" content="{{ seo.meta_description }}"/>
+            {% endif %}
+            {% if seo.meta_keywords %}
+                <meta name="keywords" content="{{ seo.meta_keywords }}"/>
+            {% endif %}
+            {% if seo.meta_canonical %}
+                <link rel="canonical" href="{{ seo.meta_canonical }}"/>
+            {% endif %}
+            {% if seo.meta_robots %}
+                <meta name="robots" content="{{ seo.meta_robots }}">
+            {% endif %}
+            <meta charset="utf-8">
+
+            <title>
+                {% block title %}
+                    {{ seo.title }}
+                {% endblock %}
+            </title>
+        {% endautoescape %}
+        {% block main_styles %}
+            <link href="{% static 'images/favicon.ico' %}" rel="icon" type="image/vnd.microsoft.icon">
+            <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+            <link href="{% static "css/slider.css" %}" rel="stylesheet">
+            <link href="{% static "css/open-sans.css" %}" rel="stylesheet">
+            <link href="{% static "css/style.css" %}" rel="stylesheet">
+            <link href="{% static "css/media.css" %}" rel="stylesheet">
+            <link href="{% static "css/lightbox.css" %}" rel="stylesheet">
+        {% endblock %}
+    </head>
+    <body class="container-fluid">
+        <div class="wrapper">
+            
+            {% if sys_script %}
+            {{ sys_script.body|safe }}
+            {% endif %}
+
+            {% get_available_languages as languages %}
+            {% if languages|length > 1 %}
+                {% get_current_language as LANGUAGE_CODE %}
+                Current language: {{ LANGUAGE_CODE }}
+                <br>
+
+                {% trans "View this search in:" %}
+                {% for lang_code, lang_name in languages %}
+                    {% language lang_code %}
+                        <a href="/{{ lang_code }}{{ language_neutral_url_path }}">{{ lang_name }}</a>
+                    {% endlanguage %}
+                {% endfor %}
+
+                <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                    <input name="next" type="hidden" value="{{ language_neutral_url_path }}" />
+                    <select name="language">
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% get_available_languages as LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value={% trans "Go" %} />
+                </form>
+            {% endif %}
+
+            <!-- HEADER -->
+
+            {% include "partials/header.html" %}
+
+            <!-- MENU -->
+        
+            {% block content %}{% endblock %}
+
+            <!-- FOOTER -->
+
+            {% include "partials/footer.html" %}
+
+            <!-- POP UP -->
+
+            <div id="popup">
+                <div class="popup-content">
+                    <a class="popup-close" href="javascript:PopUpHide()">
+                        <img src="{% static 'images/close.png' %}" alt="закрыть">
+                    </a>
+                    <div class="popup-title col-sm-12">
+                        <p class="coral">Замовити дзвінок</p>
+                    </div>
+                    <div class="popup-info col-sm-12">
+                        <p class="dark">Залиште заявку і наш фахівець зв'яжеться з вами, щоб відповісти на ваші запитання.</p>
+                    </div>
+                    <form action="{% url "callback" %}" methot="get">
+                        <div class="col-sm-12">
+                            <input type="text" name="name" placeholder="Вкажіть своє ім'я" value="">
+                            <input type="tel" name="phone" placeholder="Ваш номер телефона" value="">
+                            <input type="submit" name="button" value="Замовити дзвінок">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    <!-- SCRIPT -->
+
+    {% block main_scripts %}
+        <script src="{% static "js/jquery.1.7.1.min.js" %}"></script>
+        <script src="{% static "js/jquery.1.12.0.min.js" %}"></script>
+        <script src="{% static "js/jquery.flexslider.js" %}"></script>
+    {% endblock %}
+    {% block extra_scripts %}
+        <script type="text/javascript">
+
+                // Toggle
+                $(document).ready(function () {
+                    $('.toggle .box').click(function () {
+                      var text = $(this).children('div.panel');
+
+                      if (text.is(':hidden')) {
+                        text.slideDown('200');
+                        $(this).children('span').html('▼');   
+                      } else {
+                        text.slideUp('200');
+                        $(this).children('span').html('►');   
+                      }
+                    });
+                });
+                
+                // SLIDER
+
+                $(window).load(function() {
+                    $('.flexslider').flexslider({
+                        animation: "slide",
+                        animationLoop: false,
+                        itemWidth: 185,
+                        itemMargin: 0,
+                        minItems: 2,
+                        maxItems: 4
+                    });
+                });
+
+                // SLIDER
+
+                $(window).load(function() {
+                    $('.flexslider-recent').flexslider({
+                        animation: "slide",
+                        animationLoop: false,
+                        slideshow: false,
+                        itemWidth: 150,
+                        itemMargin: 0,
+                        minItems: 6,
+                        maxItems: 6
+                    });
+                });
+
+                // SCROLL BACK
+
+                $(document).ready(function(){
+                    $("#back-top").hide();
+                    $(function () {
+                        $(window).scroll(function () {
+                            if ($(this).scrollTop() > 600) {
+                                $('#back-top').fadeIn();
+                            } else {
+                                $('#back-top').fadeOut();
+                            }
+                        });
+                    
+                    $('#back-top a').click(function () {
+                        $('body,html').animate({
+                            scrollTop: 0
+                        }, 800);
+                        return false;
+                        });
+                    });
+                });
+
+                // POP UP
+
+                $(document).ready(function(){
+                    PopUpHide();
+                });
+                function PopUpShow(){
+                    $("#popup").fadeIn(200);
+                }
+                function PopUpHide(){
+                    $("#popup").hide();
+                }
+            </script>
+    {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load thumbnail %}
+
+{% block content %}
+    <div id="article">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>{{ news.title }}</h3>
+                        </div>
+                        <div class="col-sm-12">
+                            <p>
+                                {% thumbnail news.main_image 500x500 upscale as thumb %}
+                                <img src="{{ thumb.url }}" alt="{{ news.main_image_title }}"
+                             title="{{ news.main_image_description }}" />
+                                {{ news.body|safe }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

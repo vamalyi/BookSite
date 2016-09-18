@@ -1,0 +1,800 @@
+{% extends "layout.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load history_tags %}
+{% load variables %}
+{% load reviews_tags %}
+{% load widget_tweaks %}
+{% load wishlist_tags %}
+
+{% block layout %}
+
+<div class="col-sm-10">
+    <div class="row">
+
+        {% include "partials/category_menu.html" %}
+
+        <div class="col-sm-12">
+
+            <!-- BREADCRUMBS -->
+
+            {% block breadcrumbs %}
+            <div class="breadcrumbs">
+                <a href="/" class="dark">{% trans "Головна" %}</a>
+                > <a href="{{  product.category.get_absolute_url }}" class="dark">{{ product.category }}</a>
+                > <a href="{{  product.get_absolute_url }}" class="coral">{{ product.name }}</a>
+            </div>
+            {% endblock %}
+
+            <!-- PRODUCT TITLE -->
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            <div class="article-title product-page">
+                {% if user.is_authenticated and user.is_staff %}
+                     <a href="/admin/webshop/product/{{ product.id }}/" style="font-size:10px" class="coral">Редагувати</a>
+                    <h1>{{ product.name }}</h1>
+                {% endif %}
+            </div>
+
+            <div class="product-catalog col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">
+                                <a href="{{ product.images.first.large_image }}" data-imagelightbox="f">
+                                    {% if icon == "hit" %}
+                                        <!-- <img class="product-hit" src="{% static "images/hit-ico.png" %}" alt=""> -->
+                                    {% endif %}
+                                    {% if icon == "sale" %}
+                                        <img class="product-sale" src="{% static "images/sale-ico.png" %}" alt="хит">
+                                    {% endif %}
+                                    {% if icon == "new" %}
+                                        <img class="product-new" src="{% static "images/new-ico.png" %}" alt="новинка">
+                                    {% endif %}
+                                    {% if product.sale.image %}
+                                        <img class="product-sale" src="/media/{{ product.sale.image }}" alt="скидка" style="z-index:10000;bottom:110px;right:10px;position:absolute;box-shadow:none">
+                                    {% endif %}
+                                    {% if product.images.count > 0 %}
+                                        <img style="max-width:100%" src="{{ product.images.first.small_image }}"/ alt="купити {{ product.name }}">
+                                    {% else %}
+                                        <img src="{% static "images/none.png" %}" alt="купити {{ product.name }}">
+                                    {% endif %}
+                                </a>
+
+                                <!-- SLIDER -->
+
+                                <div class="flexslider-product" style="margin-top: 25px">
+                                    <ul class="slides">
+                                        {% for image in product.images.all %}
+                                        <li>
+                                            <div class="article-catalog-image">
+                                                {% if not forloop.first %}
+                                                    <a href="{{ image.large_image }}" data-imagelightbox="f"><img
+                                                            src="{{ image.small_image }}" alt="купити {{ product.name }}"></a>
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul>
+                                    <li><strong>Код товара: {{ product.article }}</strong></li>
+                                    <li>Автор:
+                                        <span>
+                                            {% for author in product.authors.all %}
+                                                <a class="coral" href='{% url 'search:author_filter' mfa=author.slug %}'>{{ author.name }}</a>{% if not forloop.last %}, {% endif %}
+                                            {% endfor %}
+                                        </span>
+                                    </li>
+                                    <li>Серія: <span>
+                                        <a class="coral" href='{% url 'search:series_filter' mfa=product.series.slug %}'>{{ product.series }}</a></span></li>
+                                    {% for item in product.parameter_values.all %}
+                                    <li>
+                                        {{ item.product_parameter.name }}:
+                                        <span>
+                                            {% if item.product_parameter.name == 'Тип видання' or item.product_parameter.name == 'Предмет' %}
+                                                <a class="coral" href="{% url 'search:parameter' %}?q={{ item.value.value|urlencode }}">
+                                                {{ item.value.value }}</a>
+                                            {% else %}
+                                                {{ item.value.value }}
+                                            {% endif %}
+                                        </span>
+                                    </li>
+                                    {% endfor %}
+                                    <li>ISBN: <span>{{ product.code }}</span></li>
+                                </ul>
+                                <div class="product-price text-center" style="margin-top:20px">
+                                    <div style="display:-webkit-inline-box">
+                                    {% if product.sale %}
+                                        <p class="old-price coral" style="text-decoration:line-through;margin-right:10px">
+                                            <span id="old_price" style="color:#474747">
+                                                {% if product.price_correctors.exists %}
+                                                    {{ product.price_correctors.first.get_new_price|floatformat:'2' }}
+                                                {% else %}
+                                                    {{ product.default_price|floatformat:'2' }}
+                                                {% endif %}
+                                            </span></p>
+                                        {% endif %}
+                                        <p>
+                                            <span>
+                                                {% if product.price_correctors.exists %}
+                                                    {{ product.price_correctors.first.get_new_price_with_coefficient|floatformat:'2' }}
+                                                {% else %}
+                                                    {{ product.get_default_price|floatformat:'2' }}
+                                                {% endif %}
+                                            </span>
+                                            <span>грн</span>
+                                        </p>
+                                    </div>
+                                    <div>
+                                        {% if product.id in cart_products %}
+                                            <a data-id="{{ product.id }}" class="product_in_basket" href="{% url 'basket' %}">
+                                                {% trans "У кошику" %}</a>
+                                        {% else %}
+                                            <input class="product_buy" type="button" value="{% trans " Купити" %}" data-id="{{ product.id }}" data-count="1"
+                                            data-corrector="{{ product.price_correctors.first.id }}">
+                                        {% endif %}
+                                    </div>
+                                    <div style="margin-top: 15px;">
+                                        {% if user.is_authenticated %}
+                                        {% product_in_wishlist product as product_in_wishlist %}
+                                        {% if not product_in_wishlist %}
+                                        <form id="add_to_wishlist_form"
+                                              action="{% url 'account:wishlist:wishlists-add-product' product_pk=product.pk %}"
+                                              method="post" class="btn-wishlist">
+                                            {% csrf_token %}
+                                            <a href="#"
+                                               class="article-like" style="text-decoration: none;color:#ee414f">
+                                                <img src="{% static "images/like-icon.png" %}" style="margin-right: 5px;box-shadow:none"
+                                                alt="{% trans "Add to wishlist" %}"> Додати до списку бажань</a>
+                                        </form>
+                                        {% else %}
+                                        <a href="{% url 'account:wishlist:wishlists-detail' %}"
+                                           class="article-like in-wishlist" style="text-decoration: none;color:#ee414f">
+                                            <img src="{% static "images/like-icon-on.png" %}" style="margin-right: 5px;box-shadow:none" 
+                                            alt="{% trans "Add to wishlist" %}"> У списку бажань</a>
+                                        {% endif %}
+                                        {% else %}
+                                        <img src="{% static "images/like-icon.png" %}" style="margin-right: 5px;box-shadow:none" 
+                                        alt="{% trans "Add to wishlist" %}"><a style="text-decoration: none;color:#ee414f">
+                                        {% trans 'Для додавання товару у список бажань, будь ласка, зареєструйтесь' %}</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6 border">
+                        <p class="title">Опис</p>
+                        <p>{{ product.first_text|safe }}</p>
+                        {% with tags=product.get_tags_list %}
+                            {% if tags %}
+                                <p><strong>{% trans "Tags" %}:
+                                {% for tag in tags %}
+                                    <a href="{% url "search:search" %}?q={{ tag|urlencode }}">
+                                    {{ tag }}</a>{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                                </strong></p>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+
+            {#<div class="article-title">#}
+            {#    <div class="row">#}
+                {#        <div class="col-sm-4">#}
+                    {#            <p class="coral">Книги цього автора</p>#}
+                    {#        </div>#}
+                {#        <div class="col-sm-8 line product-page"></div>#}
+                {#    </div>#}
+            {#</div>#}
+            {##}
+            {#<div class="col-sm-12">#}
+            {#    {% for sproduct in author_products %}#}
+            {#        <div class="article-catalog col-sm-2">#}
+                {#            {% include 'catalogue/partials/product_item.html' with product=sproduct %}#}
+                {#        </div>#}
+            {#    {% endfor %}#}
+            {#</div>#}
+
+            <div class="article-title">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="coral">Книги з цієї серії</p>
+                    </div>
+                    <div class="col-sm-8 line product-page"></div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                {% for sproduct in series_products %}
+                <div class="article-catalog col-sm-2">
+                    {% include 'catalogue/partials/product_item.html' with product=sproduct %}
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="article-title">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="coral">Відгуки</p>
+                    </div>
+                    <div class="col-sm-8 line product-page"></div>
+                </div>
+            </div>
+            <ol class="list-unstyled review-list">
+                {% for review in product.get_approved_top_reviews|slice:":60" %}
+                    <li style="position:relative">
+                    <div class="block">
+                        <p class="name">
+                                {% if review.name %}{{ review.name }}{% else %}
+                                    {{ review.user.username }}{% endif %}
+                        </p>
+                        {% if review.score > 0 %}
+                            <p class="catalogue-stars {{ review.score|as_stars }}">
+                                <span class="glyphicon glyphicon-star star1"></span>
+                                <span class="glyphicon glyphicon-star star2"></span>
+                                <span class="glyphicon glyphicon-star star3"></span>
+                                <span class="glyphicon glyphicon-star star4"></span>
+                                <span class="glyphicon glyphicon-star star5"></span><br/>
+                            </p>
+                        {% endif %}
+                        </div>
+                        <p>{{ review.body }}</p>
+                        <p class="date text-right">{{ review.date_created }}</p>
+
+                        <button class="coral" type="button" data-toggle="collapse"
+                                data-target="#collapseExample{{ forloop.counter }}"
+                                aria-expanded="false" aria-controls="collapseExample">
+                            {% trans "Відповісти" %}
+                        </button>
+                        <div class="collapse" id="collapseExample{{ forloop.counter }}">
+                            <div class="well">
+
+                                <h3>{% trans "Відповісти" %}</h3>
+                                {% if product.is_child %}
+                                    <form action="{% url 'catalogue:create_short_review' url=product.parent.url %}"
+                                          method="post">
+                                {% else %}
+                                    <form action="{% url 'catalogue:create_short_review' url=product.url %}"
+                                          method="post">
+                                {% endif %}
+                                {% csrf_token %}
+                                {% with form=review_short_form %}
+                                    <div class="reviewrating form-group">
+                                        {% if form.name %}
+                                            <div class="form-group">
+                                                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                                {{ form.name|add_class:"form-control"|attr:"required:required" }}
+                                            </div>
+                                        {% endif %}
+                                        {% if form.email %}
+                                            <div class="form-group">
+                                                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                                                {{ form.email|add_class:"form-control"|attr:"required:required" }}
+                                            </div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label for="{{ form.body.id_for_label }}">{{ form.body.label }}</label>
+                                            {{ form.body|add_class:"form-control"|attr:"required:required" }}
+                                            {% render_field form.parent value=review.id %}
+                                        </div>
+                                    </div>
+                                {% endwith %}
+                               <div class="row">
+                                    <div class="col-sm-8">
+                                        <p class="terms">Важливо! Щоб Ваш відгук або коментар пройшли модерацію і були опубліковані, ознайомтеся, будь ласка з <a href="{% url "page" "comment_rules" %}" target="_blank">нашими правилами</a></p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" data-loading-text="{% trans 'Saving...' %}">{% trans "Залишити відгук" %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin-top: 10px;">
+                        {% if not review.is_leaf_node %}
+                            <ol class="list-unstyled review-list" style="padding-left:60px;">
+                                {% for child_review in review.children.all|approved %}
+                                    <li>
+                                        <p class="name">
+                                                {% if child_review.name %}{{ child_review.name }}{% else %}
+                                                    {{ child_review.user.username }}{% endif %}
+                                        </p>
+                                        {% if child_review.score > 0 %}
+                                            <p class="catalogue-stars {{ child_review.score|as_stars }}">
+                                                <span class="glyphicon glyphicon-star star1"></span>
+                                                <span class="glyphicon glyphicon-star star2"></span>
+                                                <span class="glyphicon glyphicon-star star3"></span>
+                                                <span class="glyphicon glyphicon-star star4"></span>
+                                                <span class="glyphicon glyphicon-star star5"></span><br/>
+                                            </p>
+                                        {% endif %}
+                                        <p>{{ child_review.body }}</p>
+                                        <p class="date text-right">{{ child_review.date_created }}</p>
+                                    </li>
+                                    <hr style="margin-top: 10px;">
+                                {% endfor %}
+                            </ol>
+
+                        {% endif %}
+                    </li>
+                {% empty %}
+                    <li>None</li>
+                {% endfor %}
+            </ol>
+            {% if review_form %}
+                <div class="article-title">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p id="form_review" class="coral">{% trans "Написати відгук" %}</p>
+                    </div>
+                    <div class="col-sm-8 line product-page"></div>
+                </div>
+            </div>
+
+                <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab"
+                                                                  data-toggle="tab">Відгук про товар</a></li>
+                        <li role="presentation"><a href="#settings" aria-controls="settings" role="tab"
+                                                   data-toggle="tab">Короткий коментар</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+
+                            <div class="well">
+                                {% if product.is_child %}
+                                    <form action="{% url 'catalogue:create_review' url=product.parent.url %}"
+                                          method="post">
+                                {% else %}
+                                    <form action="{% url 'catalogue:create_review' url=product.url %}" method="post">
+                                {% endif %}
+                                {% csrf_token %}
+                                {% with form=review_form %}
+                                    <div class="reviewrating form-group {% if form.score.errors %}error{% endif %}">
+                                        <!-- <label for="{{ form.score.auto_id }}" class="control-label required">
+                                            {{ form.score.label|safe }}
+                                        </label> -->
+                                        <div class="controls">
+                                            <div hidden>
+                                                {% render_field form.score required="required" %}
+                                            </div>
+                                            <p class="detail-stars {% if form.score.value == '1' %}One{% elif form.score.value == '2' %}Two{% elif form.score.value == '3' %}Three{% elif form.score.value == '4' %}Four{% elif form.score.value == '5' %}Five{% endif %}">
+                                                <span class="glyphicon glyphicon-star star1"></span>
+                                                <span class="glyphicon glyphicon-star star2"></span>
+                                                <span class="glyphicon glyphicon-star star3"></span>
+                                                <span class="glyphicon glyphicon-star star4"></span>
+                                                <span class="glyphicon glyphicon-star star5"></span>
+                                            </p>
+
+                                            {% for error in form.score.errors %}
+                                                <span class="error-block"><i
+                                                        class="icon-exclamation-sign"></i> {{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% if form.name %}
+                                            <div class="form-group">
+                                                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                                {{ form.name|add_class:"form-control"|attr:"required:required" }}
+                                            </div>
+                                        {% endif %}
+                                        {% if form.email %}
+                                            <div class="form-group">
+                                                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                                                {{ form.email|add_class:"form-control"|attr:"required:required" }}
+                                            </div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label for="{{ form.body.id_for_label }}">{{ form.body.label }}</label>
+                                            {{ form.body|add_class:"form-control"|attr:"required:required" }}
+                                            {{ form.parent }}
+                                        </div>
+                                    </div>
+                                {% endwith %}
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <p class="terms">Важливо! Щоб Ваш відгук або коментар пройшли модерацію і були опубліковані, ознайомтеся, будь ласка з <a href="{% url "page" "comment_rules" %}" target="_blank">нашими правилами</a></p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" data-loading-text="{% trans 'Saving...' %}">{% trans "Залишити відгук" %}</button>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="settings">
+
+                            <div class="well">
+                                {% if product.is_child %}
+                                    <form action="{% url 'catalogue:create_short_review' url=product.parent.url %}"
+                                          method="post">
+                                {% else %}
+                                    <form action="{% url 'catalogue:create_short_review' url=product.url %}"
+                                          method="post">
+                                {% endif %}
+                                {% csrf_token %}
+                                {% with form=review_form %}
+                                    <div class="reviewrating form-group">
+                                        {% if form.name %}
+                                            <div class="form-group">
+                                                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                                {{ form.name|add_class:"form-control"|attr:"required:required" }}
+                                            </div>
+                                        {% endif %}
+                                        {% if form.email %}
+                                            <div class="form-group">
+                                                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                                                {{ form.email|add_class:"form-control"|attr:"required:required" }}
+                                            </div>
+                                        {% endif %}
+                                        <div class="form-group">
+                                            <label for="{{ form.body.id_for_label }}">{{ form.body.label }}</label>
+                                            {{ form.body|add_class:"form-control"|attr:"required:required" }}
+                                            {{ form.parent }}
+                                        </div>
+                                    </div>
+                                {% endwith %}
+                               <div class="row">
+                                    <div class="col-sm-8">
+                                        <p class="terms">Важливо! Щоб Ваш відгук або коментар пройшли модерацію і були опубліковані, ознайомтеся, будь ласка з <a href="{% url "page" "comment_rules" %}" target="_blank">нашими правилами</a></p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button type="submit" data-loading-text="{% trans 'Saving...' %}">{% trans "Залишити відгук" %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            {% endif %}
+
+
+
+
+
+
+
+            <div class="article-title">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="coral">Останні перегляди</p>
+                    </div>
+                    <div class="col-sm-8 line product-page"></div>
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                {% block recently_products %}
+                    {% recently_viewed_products %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+<aside class="aside-menu col-sm-2 text-center">
+    <p class="white">Швидкий пошук</p>
+    <ul>
+        {% for word in fast_search_words %}
+            <li><a href="{% url 'search:search' %}?q={{ word|urlencode:"" }}" class="dark">{{ word }}</a></li>
+        {% endfor %}
+    </ul>
+</aside>
+{% endblock %}
+
+{% block extra_scripts %}
+<script defer src="{% static "js/jquery.flexslider.js" %}"></script>
+<script defer src = "{% static "js/lightbox.min.js" %}" ></script>
+    <script defer src="{% static "js/bootstrap.js" %}"></script>
+    <script>
+        var reviewRatingClick = function (event) {
+            var ratings = ['One', 'Two', 'Three', 'Four', 'Five']; //possible classes for display state
+            $(this).parent().removeClass('One Two Three Four Five').addClass(ratings[$(this).index()]);
+            $(this).closest('.controls').find('select').val($(this).index() + 1); //select is hidden, set value
+        };
+
+        ratings = $('.reviewrating');
+        if (ratings.length) {
+            ratings.find('.detail-stars span').on('click', reviewRatingClick);
+            //ratings.find('.star-rating i').on('click',o.forms.reviewRatingClick);
+        }
+    </script>
+<script type="text/javascript">
+
+    // POP UP
+
+    $(document).ready(function(){
+        PopUpHide();
+    });
+    function PopUpShow(){
+        $("#popup").fadeIn(200);
+    }
+    function PopUpHide(){
+        $("#popup").hide();
+    }
+
+    // SLIDER
+
+    $(window).load(function() {
+        $('.flexslider-recent').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 150,
+            itemMargin: 0,
+            minItems: 6,
+            maxItems: 6
+        });
+    });
+
+    $(window).load(function() {
+        $('.flexslider-product').flexslider({
+            animation: "slide",
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 55,
+            itemMargin: 0,
+            minItems: 3,
+            maxItems: 3
+        });
+    });
+
+    $(window).load(function () {
+        $('#carousel').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: false,
+            slideshow: false,
+            itemWidth: 210,
+            itemMargin: 5,
+            asNavFor: '#slider'
+        });
+
+        $('#slider').flexslider({
+            animation: "slide",
+            controlNav: false,
+            animationLoop: false,
+            slideshow: false,
+            sync: "#carousel"
+        });
+    });
+
+    // DROPDOWN
+
+    function DropDown(el) {
+        this.dd = el;
+        this.initEvents();
+    }
+    DropDown.prototype = {
+        initEvents: function () {
+            var obj = this;
+            obj.dd.on('click', function (event) {
+                $(this).toggleClass('active');
+                event.stopPropagation();
+            });
+        }
+    };
+
+    $(function () {
+        var dd = new DropDown($('#dd'));
+        $(document).click(function () {
+            $('.wrapper-dropdown').removeClass('active');
+        });
+    });
+</script>
+<script type="text/javascript">
+    var csrftokenn = function (context) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, context.length + 1) == (context + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(context.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }('csrftoken');
+    $('.product_buy').click(function () {
+        var t = this;
+        $.post("/api/add_product/",
+                {
+                    'id': this.dataset.id,
+                    'price_corrector_id': this.dataset.corrector,
+                    'count': this.dataset.count,
+                    'csrfmiddlewaretoken': csrftokenn
+                },
+                function (data) {
+                    console.log(t.dataset.id, csrftokenn, data);
+                    if (data.result === true) {
+                        $(t).parent().html('<a class="product_in_basket" href="/basket/">{% trans "У кошику" %}</a>');
+                        var basket_count_span = $('#basket_count');
+                        if (basket_count_span.html() != undefined) {
+                            if (data.data.count < 1) {
+                                basket_count_span.html('');
+                            } else {
+                                basket_count_span.html(data.data.count);
+                            }
+                        } else {
+                        }
+                    }
+                })
+    })
+
+    $(function () {
+
+        // ACTIVITY INDICATOR
+
+        var activityIndicatorOn = function () {
+                    $('<div id="imagelightbox-loading"><div></div></div>').appendTo('body');
+                },
+                activityIndicatorOff = function () {
+                    $('#imagelightbox-loading').remove();
+                },
+
+        // OVERLAY
+
+                overlayOn = function () {
+                    $('<div id="imagelightbox-overlay"></div>').appendTo('body');
+                },
+                overlayOff = function () {
+                    $('#imagelightbox-overlay').remove();
+                },
+
+        // CLOSE BUTTON
+
+                closeButtonOn = function (instance) {
+                    $('<button type="button" id="imagelightbox-close" title="Close"></button>').appendTo('body').on('click touchend', function () {
+                        $(this).remove();
+                        instance.quitImageLightbox();
+                        return false;
+                    });
+                },
+                closeButtonOff = function () {
+                    $('#imagelightbox-close').remove();
+                },
+
+        // CAPTION
+
+                captionOn = function () {
+                    var description = $('a[href="' + $('#imagelightbox').attr('src') + '"] img').attr('alt');
+                    if (description.length > 0)
+                        $('<div id="imagelightbox-caption">' + description + '</div>').appendTo('body');
+                },
+                captionOff = function () {
+                    $('#imagelightbox-caption').remove();
+                },
+
+        // NAVIGATION
+
+                navigationOn = function (instance, selector) {
+                    var images = $(selector);
+                    if (images.length) {
+                        var nav = $('<div id="imagelightbox-nav"></div>');
+                        for (var i = 0; i < images.length; i++)
+                            nav.append('<button type="button"></button>');
+
+                        nav.appendTo('body');
+                        nav.on('click touchend', function () {
+                            return false;
+                        });
+
+                        var navItems = nav.find('button');
+                        navItems.on('click touchend', function () {
+                            var $this = $(this);
+                            if (images.eq($this.index()).attr('href') != $('#imagelightbox').attr('src'))
+                                instance.switchImageLightbox($this.index());
+
+                            navItems.removeClass('active');
+                            navItems.eq($this.index()).addClass('active');
+
+                            return false;
+                        })
+                                .on('touchend', function () {
+                                    return false;
+                                });
+                    }
+                },
+                navigationUpdate = function (selector) {
+                    var items = $('#imagelightbox-nav button');
+                    items.removeClass('active');
+                    items.eq($(selector).filter('[href="' + $('#imagelightbox').attr('src') + '"]').index(selector)).addClass('active');
+                },
+                navigationOff = function () {
+                    $('#imagelightbox-nav').remove();
+                },
+
+        // ARROWS
+
+                arrowsOn = function (instance, selector) {
+                    var $arrows = $('<button type="button" class="imagelightbox-arrow imagelightbox-arrow-left"></button><button type="button" class="imagelightbox-arrow imagelightbox-arrow-right"></button>');
+
+                    $arrows.appendTo('body');
+
+                    $arrows.on('click touchend', function (e) {
+                        e.preventDefault();
+
+                        var $this = $(this),
+                                $target = $(selector + '[href="' + $('#imagelightbox').attr('src') + '"]'),
+                                index = $target.index(selector);
+
+                        if ($this.hasClass('imagelightbox-arrow-left')) {
+                            index = index - 1;
+                            if (!$(selector).eq(index).length)
+                                index = $(selector).length;
+                        }
+                        else {
+                            index = index + 1;
+                            if (!$(selector).eq(index).length)
+                                index = 0;
+                        }
+
+                        instance.switchImageLightbox(index);
+                        return false;
+                    });
+                },
+                arrowsOff = function () {
+                    $('.imagelightbox-arrow').remove();
+                };
+
+        //  ALL COMBINED
+
+        var selectorF = 'a[data-imagelightbox="f"]';
+        var instanceF = $(selectorF).imageLightbox({
+            onStart: function () {
+                overlayOn();
+                closeButtonOn(instanceF);
+                arrowsOn(instanceF, selectorF);
+            },
+            onEnd: function () {
+                overlayOff();
+                captionOff();
+                closeButtonOff();
+                arrowsOff();
+                activityIndicatorOff();
+            },
+            onLoadStart: function () {
+                captionOff();
+                activityIndicatorOn();
+            },
+            onLoadEnd: function () {
+                captionOn();
+                activityIndicatorOff();
+                $('.imagelightbox-arrow').css('display', 'block');
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $('.article-like').on('click', function (e) {
+        if (!$(this).hasClass('in-wishlist')) {
+            e.preventDefault();
+            $(this).addClass('in-wishlist');
+            $(this).attr('href', '{% url 'account:wishlist:wishlists-detail' %}');
+            $(this).children('img').attr('src', '{% static "images/like-icon-on.png" %}');
+            $(this).closest('form').submit();
+        }
+    });
+</script>
+{% endblock %}

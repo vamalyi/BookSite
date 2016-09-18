@@ -1,0 +1,43 @@
+{% load display_tags %}
+{% load staticfiles %}
+{% load i18n %}
+
+<ul class="col-sm-8 text-right">
+    {% if page_obj.has_previous %}
+        <li class="prev-active">
+            <a href="?{% get_parameters page %}page={{ page_obj.previous_page_number }}"
+               aria-label="{% trans "previous" %}">
+                <img src="{% static "images/prev-active-ico.png" %}" alt="предыдущая страница">
+            </a>
+        </li>
+    {% else %}
+        <li class="prev">
+            <a href="#" aria-label="{% trans "previous" %}">
+                <img src="{% static "images/prev-ico.png" %}" alt="предыдущая страница">
+            </a>
+        </li>
+    {% endif %}
+    {% for page in paginator.page_range %}
+        {% if page == page_obj.number %}
+            <li class="active"><a href="?{% get_parameters page %}page={{ page }}">
+                {{ page }} <span class="sr-only">(current)</span>
+            </a></li>
+        {% else %}
+            <li><a href="?{% get_parameters page %}page={{ page }}">{{ page }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+        <li class="next-active">
+            <a href="?{% get_parameters page %}page={{ page_obj.next_page_number }}"
+               aria-label="{% trans "next" %}">
+                <img src="{% static "images/next-active-ico.png" %}" alt="следующая страница">
+            </a>
+        </li>
+    {% else %}
+        <li class="next">
+            <a href="#" aria-label="{% trans "next" %}">
+                <img src="{% static "images/next-ico.png" %}" alt="следующая страница">
+            </a>
+        </li>
+    {% endif %}
+</ul>

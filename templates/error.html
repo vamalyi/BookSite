@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1>{% block error_heading %}{% trans 'Sorry!' %}{% endblock %}</h1>
+        {% block error_message %}{% endblock %}
+        <p>
+            <a class="btn btn-primary btn-lg" onclick="javascript:history.go(-1);">{% trans 'Вернуться на предыдущую страницу' %}</a>
+            <a class="btn btn-primary btn-lg" href="/">{% trans "На главную страницу" %}</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

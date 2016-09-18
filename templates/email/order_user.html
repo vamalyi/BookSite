@@ -1,0 +1,33 @@
+{% load i18n %}
+{% block recipient %}
+{% endblock %}
+<p>{{ subject }}</p>
+{% if basket.owner %}
+    <p>Пользователь: {{ basket.owner }}</p>
+    <p>Email: {{ basket.owner.email }}</p>
+    {% if basket.owner.first_name or basket.owner.last_name %}
+        <p>Имя пользователя: {{ basket.owner.first_name }} {{ basket.owner.last_name }}</p>
+    {% endif %}
+{% else %}
+    <p>Пользователь: {{ basket.username }}</p>
+    {% if basket.email %}
+        <p>Email: {{ basket.email }}</p>
+    {% endif %}
+{% endif %}
+<p>Телефон: {{ phone }}</p>
+{% if address %}
+    <p>Адрес доставки: {{ address }}</p>
+{% endif %}
+{% if basket.description %}
+    <p>Дополнительная информация: <br/>
+        {{ basket.description|linebreaksbr }}</p>
+{% endif %}
+Заказ:
+<ul>
+    {% for foo in basket.order_items.all %}
+    <li style="list-style: none;"><strong>{{ forloop.counter }}: {{ foo.product }}</strong>, <i>{{ foo.product.get_default_price|floatformat:"2" }} грн. x {{ foo.count }} шт. = {{ foo.price|floatformat:"2" }} грн.</i></li>
+    {% endfor %}
+</ul>
+<p>Способ доставки: {{ basket.delivery.name }} ({{ basket.delivery.price|floatformat:"2" }} грн.)</p>
+<p><strong>Всего:</strong> {{ total_price|floatformat:"2" }} грн.</p>
+

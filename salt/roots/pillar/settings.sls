@@ -1,0 +1,9 @@
+dbengine: django.db.backends.postgresql_psycopg2
+dbname: books_db
+dbuser: books_user
+dbpassword: books_pass
+dbhost: localhost
+dbport: 5432
+secret_key: oehunoaehuntoahiroaHDtDDthdDTDdTroaHDtDNHdtoedhSthadTDthDddTthDdiu
+project: books.3days.website
+domain: 127.0.0.1

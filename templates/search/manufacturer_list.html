@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load display_tags %}
+
+{% block content %}
+    <div class="container">
+        {% regroup manufacturer_list|dictsort:"name" by get_first_letter as first_letter %}
+        <div>
+            <ul style="list-style: none">
+                {% for letter in first_letter %}
+                    <li><h2 id="letter_{{ letter.grouper }}" class="letter-title">{{ letter.grouper }}</h2>
+                        <ul class="list">
+                            {% for item in letter.list %}
+                                <li><a style="color:#333;" href="{% url 'search:manufacturer_filter' mfa=item.slug %}">{{ item.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load mptt_tags %}
+{% load menu %}
+
+{% get_menu 'Головне' as menu_items %}
+<nav class="navbar-nav col-sm-9">
+    <ul>
+        {% recursetree menu_items %}
+            <li>
+                {% if node.alternative_url %}
+                    {% if node.alternative_url == '/index/' %}
+                        <a href="/" class="dark">
+                    {% else %}
+                        <a href="{{ node.alternative_url }}" class="dark">
+                    {% endif %}
+                {% else %}
+                    {% if node.content_object.get_absolute_url == '/index/' %}
+                        <a href="/" class="dark">
+                    {% else %}
+                        <a href="{{ node.content_object.get_absolute_url }}" class="dark">
+                    {% endif %}
+                {% endif %}
+                    {% if node.alternative_name %}
+                        {{ node.alternative_name }}
+                    {% else %}
+                        {{ node.content_object.name }}
+                    {% endif %}
+                </a>
+            </li>
+        {% endrecursetree %}
+    </ul>
+</nav>

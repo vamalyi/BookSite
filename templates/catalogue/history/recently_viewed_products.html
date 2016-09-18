@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load static %}
+
+{% with products_sliced=products|slice:":20" %}
+    {% if products_sliced %}
+    <div class="flexslider-recent">
+        <ul class="slides">
+        {% for product in products_sliced %}
+        	<li>
+                <div class="article-catalog col-sm-12">
+                   {% include 'catalogue/partials/product_item.html' %}
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endwith %}

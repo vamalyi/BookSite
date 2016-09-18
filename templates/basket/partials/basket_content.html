@@ -1,0 +1,33 @@
+{% load i18n %}
+
+<ul class="table-cart col-sm-12">
+    <li class="white">{% trans "Назва книги" %}</li>
+    <li class="white">{% trans "Кількість" %}</li>
+    <li class="white">{% trans "Ціна" %}</li>
+</ul>
+<span></span>
+{% for product in products %}
+<div class="product-cart block-cart col-sm-12">
+    <div class="row">
+        <div class="image-cart col-sm-4">
+            <div class="text-center">
+                <img src="{{ product.0.images.first.large_image }}" alt="{{ product.name }}">
+            </div>
+            <p>{{ product.0.name }}</p>
+        </div>
+        <div class="info-cart col-sm-4">
+            <div>
+                <button class="dec">-</button>
+                <input class="product_count" data-id="{{ product.0.id }}" type="number" min="1" max="99" value="{{ product.2 }}">
+                <button class="inc">+</button>
+            </div>
+        </div>
+        <div class="info-cart col-sm-3">
+            <p>
+                <span>{% blocktrans with price=product.3|floatformat:"2" %}{{ price }} грн{% endblocktrans %}</span>
+                <button class="product_button" data-id="{{ product.0.id }}" data-corrector="{{ product.1.id }}">X</button>
+            </p>
+        </div>
+    </div>
+</div>
+{% endfor %}

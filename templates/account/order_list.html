@@ -1,0 +1,87 @@
+{% extends "account/profile_base.html" %}
+{% load display_tags %}
+{% load i18n %}
+
+{% block tabcontent %}
+    <div class="article-title col-sm-12" style="margin-bottom:20px">
+        <p>Мої замовлення</p>
+    </div>
+    <div class="col-sm-12">
+        <div class="list-group">
+
+             <!-- Toggle -->
+            <div class="toggle">
+
+                {% for order in orders %}
+                    
+                    <div class="box">
+                        <div class="list-group-item" style="border:none">
+                            <table style="width:100%">
+                                <tr>
+                                    <td>{{ order.number }}</td>
+                                    <td>{{ order.date_on_add }}</td>
+                                    <td>{{ order.fixed_sum }}</td>
+                                    <td>
+                                        {% if order.closed %}
+                                            <span style="color:#88ad03">{% trans "Виконано" %}</span> -
+                                        {% else %}
+                                            {% trans "Нове замовлення" %}
+                                        {% endif %}
+                                    </td>
+                                    <td style="color:#e0394a;text-decoration:underline">Дивитися замовлення</td>
+                                </tr>
+                            </table>
+                            {#{{ order.phone }}#}
+                            {#{% if order.paid %}#}
+                                {#{% trans "Paid" %} -#}
+                            {#{% else %}#}
+                                {#{% trans "No paid" %} -#}
+                            {#{% endif %}#}
+                        </div>
+
+                        <!-- Panel -->
+                        <div class="panel">
+                            <table class="table table-striped">
+                                {% for order_item in order.order_items.all %}
+                                    <tr>
+                                        <td>
+                                        <img src="{{ order_item.product.images.all.0.image_small }}"
+                                                 alt="{{ order_item.product.name }}" style="max-width:120px;display:inherit;margin-bottom:0;border:none"></td>
+                                        <td style="vertical-align:middle;color:#000;font-size:15px">{{ order_item.product.name }}</td>
+                                        <td style="vertical-align:middle">{{ order_item.product.get_default_price }}</td>
+                                        <td style="vertical-align:middle"></td>
+                                        <td style="vertical-align:middle">{{ order_item.count }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+            
+                {% endfor %}
+            
+            </div>
+        </div>
+
+        {% if paginator.num_pages > 20 %}
+            <div>
+                <ul class="pager">
+                    {% if page_obj.has_previous %}
+                        <li class="previous"><a
+                                href="?{% get_parameters page %}page={{ page_obj.previous_page_number }}">{% trans "previous" %}</a>
+                        </li>
+                    {% endif %}
+                    <li class="current">
+                        {% blocktrans with page_num=page_obj.number total_pages=paginator.num_pages %}
+                            Page {{ page_num }} of {{ total_pages }}
+                        {% endblocktrans %}
+                    </li>
+                    {% if page_obj.has_next %}
+                        <li class="next"><a
+                                href="?{% get_parameters page %}page={{ page_obj.next_page_number }}">{% trans "next" %}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+{% endblock tabcontent %}

@@ -1,0 +1,1736 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-05 15:52+0300\n"
+"PO-Revision-Date: 2016-03-31 15:04+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+
+#: analytics/apps.py:8
+msgid "Analytics"
+msgstr ""
+
+#: analytics/models.py:9 analytics/models.py:61 webshop/models.py:94
+#: webshop/models.py:464 webshop/models.py:473 webshop/models.py:529
+#: webshop/models.py:563 webshop/models.py:675 webshopcart/models.py:20
+msgid "Product"
+msgstr ""
+
+#: analytics/models.py:13
+msgid "Views"
+msgstr ""
+
+#: analytics/models.py:15 analytics/models.py:39
+msgid "Basket Additions"
+msgstr ""
+
+#: analytics/models.py:17
+msgid "Purchases"
+msgstr ""
+
+#: analytics/models.py:20 webshop/models.py:483 webshop/models.py:573
+msgid "Score"
+msgstr ""
+
+#: analytics/models.py:25
+msgid "Product record"
+msgstr ""
+
+#: analytics/models.py:26
+msgid "Product records"
+msgstr ""
+
+#: analytics/models.py:29
+#, python-format
+msgid "Record for '%s'"
+msgstr ""
+
+#: analytics/models.py:33 analytics/models.py:60 analytics/models.py:76
+#: webaccount/models.py:7 webaccount/models.py:47 webaccount/models.py:75
+msgid "User"
+msgstr ""
+
+#: analytics/models.py:37
+msgid "Product Views"
+msgstr ""
+
+#: analytics/models.py:43 webaccount/views.py:193
+msgid "Orders"
+msgstr ""
+
+#: analytics/models.py:45
+msgid "Order Lines"
+msgstr ""
+
+#: analytics/models.py:47
+msgid "Order Items"
+msgstr ""
+
+#: analytics/models.py:48
+msgid "Total Spent"
+msgstr ""
+
+#: analytics/models.py:51
+msgid "Last Order Date"
+msgstr ""
+
+#: analytics/models.py:55
+msgid "User record"
+msgstr ""
+
+#: analytics/models.py:56
+msgid "User records"
+msgstr ""
+
+#: analytics/models.py:62 analytics/models.py:78 webaccount/models.py:54
+msgid "Date Created"
+msgstr ""
+
+#: analytics/models.py:66
+msgid "User product view"
+msgstr ""
+
+#: analytics/models.py:67
+msgid "User product views"
+msgstr ""
+
+#: analytics/models.py:70
+#, python-format
+msgid "%(user)s viewed '%(product)s'"
+msgstr ""
+
+#: analytics/models.py:77
+msgid "Search term"
+msgstr ""
+
+#: analytics/models.py:82
+msgid "User search query"
+msgstr ""
+
+#: analytics/models.py:83
+msgid "User search queries"
+msgstr ""
+
+#: analytics/models.py:86
+#, python-format
+msgid "%(user)s searched for '%(query)s'"
+msgstr ""
+
+#: core/fields.py:20
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: core/models.py:6
+msgid "H1"
+msgstr ""
+
+#: core/models.py:7
+msgid "Title for page"
+msgstr ""
+
+#: core/validators.py:10
+msgid ""
+"Enter a valid 'slug' consisting of letters, numbers, underscores, slash or "
+"hyphens."
+msgstr ""
+
+#: core/validators.py:16
+msgid ""
+"Enter a valid 'slug' consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: frankie_web_platform/settings.py:205
+msgid "Ukrainian"
+msgstr ""
+
+#: news/models.py:12 website/models.py:53 website/models.py:164
+msgid "Title"
+msgstr ""
+
+#: news/models.py:13 webshop/models.py:48 webshop/models.py:347
+#: website/models.py:24
+msgid "URL"
+msgstr ""
+
+#: news/models.py:16
+msgid "News"
+msgstr ""
+
+#: news/models.py:17 webshop/models.py:345
+msgid "Article"
+msgstr ""
+
+#: news/models.py:18
+msgid "Overview"
+msgstr ""
+
+#: news/models.py:20
+msgid "Type"
+msgstr ""
+
+#: news/models.py:22
+msgid "Main image"
+msgstr ""
+
+#: news/models.py:23
+msgid "Alt of main image"
+msgstr ""
+
+#: news/models.py:24
+msgid "Title of main image"
+msgstr ""
+
+#: news/models.py:26
+msgid "Short text"
+msgstr ""
+
+#: news/models.py:27
+msgid "Main text"
+msgstr ""
+
+#: news/models.py:28
+msgid "Additional text"
+msgstr ""
+
+#: news/models.py:30 website/models.py:27 website/models.py:59
+#: website/models.py:233
+msgid "Gallery"
+msgstr ""
+
+#: news/models.py:31 webshop/models.py:363 website/models.py:28
+msgid "Alternative template"
+msgstr ""
+
+#: news/models.py:33 webshop/models.py:56 webshop/models.py:89
+#: webshop/models.py:366
+msgid "Created date"
+msgstr ""
+
+#: news/models.py:34 webshop/models.py:57 webshop/models.py:90
+#: webshop/models.py:367
+msgid "Updated date"
+msgstr ""
+
+#: news/models.py:37
+msgid "Draft"
+msgstr ""
+
+#: news/models.py:38
+msgid "Published"
+msgstr ""
+
+#: news/models.py:41 webshop/models.py:495 webshop/models.py:585
+msgid "Status"
+msgstr ""
+
+#: news/models.py:43
+msgid "Owner of post"
+msgstr ""
+
+#: news/models.py:49
+msgid "Post"
+msgstr ""
+
+#: news/models.py:50
+msgid "Posts"
+msgstr ""
+
+#: search/forms.py:9
+msgid "Search"
+msgstr ""
+
+#: templates/403.html:5 templates/403.html:9
+msgid "Permission denied!"
+msgstr ""
+
+#: templates/403.html:13
+msgid "We're sorry but you are not permitted to access this page."
+msgstr ""
+
+#: templates/404.html:5 templates/404.html:9
+msgid "Страница не найдена"
+msgstr ""
+
+#: templates/404.html:13
+msgid "Извините, но запрашиваемая страница не найдена."
+msgstr ""
+
+#: templates/account/callback.html:12
+msgid "Send callback"
+msgstr ""
+
+#: templates/account/login_registration.html:7
+#: templates/account/login_registration.html:32
+#: templates/account/login_registration.html:33
+msgid "Увійти"
+msgstr ""
+
+#: templates/account/login_registration.html:37
+#: templates/account/login_registration.html:76
+#: templates/account/login_registration.html:77
+msgid "Зареєструватися"
+msgstr ""
+
+#: templates/account/order_detail.html:17
+msgid "Back"
+msgstr ""
+
+#: templates/account/order_list.html:12
+msgid "Paid"
+msgstr ""
+
+#: templates/account/order_list.html:14
+msgid "No paid"
+msgstr ""
+
+#: templates/account/order_list.html:17
+msgid "Closed"
+msgstr ""
+
+#: templates/account/order_list.html:19
+msgid "Open"
+msgstr ""
+
+#: templates/account/order_list.html:44
+#: templates/catalogue/partials/pagination.html:9
+#: templates/catalogue/partials/pagination.html:15
+msgid "previous"
+msgstr ""
+
+#: templates/account/order_list.html:48
+#, python-format
+msgid ""
+"\n"
+"                                Page %(page_num)s of %(total_pages)s\n"
+"                            "
+msgstr ""
+
+#: templates/account/order_list.html:54
+#: templates/catalogue/partials/pagination.html:32
+#: templates/catalogue/partials/pagination.html:38
+msgid "next"
+msgstr ""
+
+#: templates/account/profile.html:13
+msgid "Вернуться на главную"
+msgstr ""
+
+#: templates/account/profile.html:27
+msgid "История заказов"
+msgstr ""
+
+#: templates/account/profile.html:49
+msgid "Личные данные"
+msgstr ""
+
+#: templates/account/profile.html:60
+msgid "Настройки"
+msgstr ""
+
+#: templates/account/profile.html:71
+msgid "Акции магазина"
+msgstr ""
+
+#: templates/account/profile.html:82
+msgid "Связаться с нами"
+msgstr ""
+
+#: templates/account/profile.html:93
+msgid "Назад в магазин"
+msgstr ""
+
+#: templates/account/profile_base.html:6
+msgid "Назад"
+msgstr ""
+
+#: templates/account/profile_edit.html:54 templates/account/settings.html:19
+msgid "Save"
+msgstr ""
+
+#: templates/account/settings.html:20
+msgid "Log out"
+msgstr ""
+
+#: templates/account/settings.html:21
+msgid "Cancel"
+msgstr ""
+
+#: templates/admin/change_form.html:21
+msgid "Home"
+msgstr ""
+
+#: templates/admin/change_form.html:24
+msgid "Add"
+msgstr ""
+
+#: templates/admin/change_form.html:36
+msgid "History"
+msgstr ""
+
+#: templates/admin/change_form.html:38
+msgid "View on site"
+msgstr ""
+
+#: templates/admin/change_form.html:50
+msgid "Please correct the error below."
+msgstr ""
+
+#: templates/admin/change_form.html:50
+msgid "Please correct the errors below."
+msgstr ""
+
+#: templates/base.html:55
+msgid "View this search in:"
+msgstr ""
+
+#: templates/base.html:74
+msgid "Go"
+msgstr ""
+
+#: templates/basket/basket.html:17 templates/catalogue/category.html:73
+#: templates/catalogue/novelty.html:27 templates/catalogue/product.html:22
+#: templates/search/author_filter.html:6 templates/search/parameter.html:6
+#: templates/search/results.html:6 templates/search/series_filter.html:7
+msgid "Головна"
+msgstr ""
+
+#: templates/basket/basket.html:17 templates/basket/basket.html:29
+msgid "Кошик"
+msgstr ""
+
+#: templates/basket/basket.html:45
+msgid "Оформить без регистрации"
+msgstr ""
+
+#: templates/basket/basket.html:48
+msgid "Войти и оформить"
+msgstr ""
+
+#: templates/basket/basket.html:51
+msgid "Зарегистрироваться и оформить"
+msgstr ""
+
+#: templates/basket/basket.html:57
+msgid "Оформлення замовлення"
+msgstr ""
+
+#: templates/basket/basket.html:69 templates/basket/basket.html:96
+#: templates/basket/basket.html:123 templates/basket/basket.html:152
+msgid "Select city"
+msgstr ""
+
+#: templates/basket/basket.html:74 templates/basket/basket.html:102
+#: templates/basket/basket.html:129 templates/basket/basket.html:158
+msgid "Select warehouses"
+msgstr ""
+
+#: templates/basket/basket.html:174
+msgid "Всього"
+msgstr ""
+
+#: templates/basket/basket.html:176
+#, python-format
+msgid "Товари на суму <span id=\"total_price_value\">%(price)s грн</span>"
+msgstr ""
+
+#: templates/basket/basket.html:177
+msgid "Вартість доставки <span id=\"delivery_value\">0 грн</span>"
+msgstr ""
+
+#: templates/basket/basket.html:178
+#, python-format
+msgid "До сплати <span id=\"price_with_delivery_value\">%(price)s грн</span>"
+msgstr ""
+
+#: templates/basket/basket.html:179
+msgid "Замовлення підтверджую"
+msgstr ""
+
+#: templates/basket/basket.html:181
+msgid "Підтверджуючи замовлення, я приймаю умови угоди"
+msgstr ""
+
+#: templates/basket/partials/basket_content.html:4
+msgid "Назва книги"
+msgstr ""
+
+#: templates/basket/partials/basket_content.html:5
+msgid "Кількість"
+msgstr ""
+
+#: templates/basket/partials/basket_content.html:6
+msgid "Цена"
+msgstr ""
+
+#: templates/basket/partials/basket_content.html:27
+#, python-format
+msgid "%(price)s грн"
+msgstr ""
+
+#: templates/callback/thanks_callback.html:9
+msgid "Ваш запрос принят в обработку!"
+msgstr ""
+
+#: templates/callback/thanks_callback.html:11
+msgid "В ближайшее время с Вами свяжется наш менеджер."
+msgstr ""
+
+#: templates/catalogue/category.html:15
+msgid "Filter"
+msgstr ""
+
+#: templates/catalogue/category.html:47
+msgid "По ціні:"
+msgstr ""
+
+#: templates/catalogue/category.html:94
+msgid "Сортування:"
+msgstr ""
+
+#: templates/catalogue/category.html:98 templates/catalogue/category.html:110
+#: templates/catalogue/category.html:114
+msgid "За замовчуванням"
+msgstr ""
+
+#: templates/catalogue/category.html:100 templates/catalogue/category.html:117
+msgid "Від дешевих"
+msgstr ""
+
+#: templates/catalogue/category.html:102 templates/catalogue/category.html:120
+msgid "Від дорогих"
+msgstr ""
+
+#: templates/catalogue/category.html:104 templates/catalogue/category.html:123
+msgid "Від А до Я"
+msgstr ""
+
+#: templates/catalogue/category.html:106 templates/catalogue/category.html:126
+msgid "Від Я до А"
+msgstr ""
+
+#: templates/catalogue/category.html:108 templates/catalogue/category.html:129
+msgid "Нові товари"
+msgstr ""
+
+#: templates/catalogue/category.html:153
+msgid "Сбросить"
+msgstr ""
+
+#: templates/catalogue/category.html:159
+#, python-format
+msgid ""
+"\n"
+"                                Подобрано %(products_count)s товара из "
+"%(all_products_count)s\n"
+"                            "
+msgstr ""
+
+#: templates/catalogue/category.html:177 templates/catalogue/category.html:183
+#: templates/catalogue/category.html:187
+msgid "12 товарів"
+msgstr ""
+
+#: templates/catalogue/category.html:179 templates/catalogue/category.html:190
+msgid "24 товарів"
+msgstr ""
+
+#: templates/catalogue/category.html:181 templates/catalogue/category.html:193
+msgid "Усі товари"
+msgstr ""
+
+#: templates/catalogue/category.html:340 templates/catalogue/novelty.html:199
+msgid "In basket"
+msgstr ""
+
+#: templates/catalogue/novelty.html:58
+#: templates/catalogue/partials/product_item.html:45
+#, python-format
+msgid "%(price)s <span>грн</span>"
+msgstr ""
+
+#: templates/catalogue/novelty.html:73
+msgid "Код товара"
+msgstr ""
+
+#: templates/catalogue/novelty.html:77 templates/search/author_filter.html:38
+msgid "Автор"
+msgstr ""
+
+#: templates/catalogue/novelty.html:85 templates/search/series_filter.html:17
+msgid "Серія"
+msgstr ""
+
+#: templates/catalogue/novelty.html:105 webshop/models.py:344
+msgid "ISBN"
+msgstr ""
+
+#: templates/catalogue/product.html:139 templates/catalogue/product.html:573
+msgid "В корзине"
+msgstr ""
+
+#: templates/catalogue/product.html:141
+msgid " Купить"
+msgstr ""
+
+#: templates/catalogue/product.html:155 webshop/models.py:375
+msgid "Tags"
+msgstr ""
+
+#: templates/catalogue/product.html:202
+msgid "Customer Reviews"
+msgstr ""
+
+#: templates/catalogue/product.html:227 templates/catalogue/product.html:232
+msgid "Ответить"
+msgstr ""
+
+#: templates/catalogue/product.html:263 templates/catalogue/product.html:367
+#: templates/catalogue/product.html:404
+msgid "Saving..."
+msgstr ""
+
+#: templates/catalogue/product.html:263 templates/catalogue/product.html:367
+#: templates/catalogue/product.html:404
+msgid "Save review"
+msgstr ""
+
+#: templates/catalogue/product.html:301
+msgid "Create Review"
+msgstr ""
+
+#: templates/email/callback_admin.html:2
+msgid "Name:"
+msgstr ""
+
+#: templates/email/callback_admin.html:3
+msgid "Phone:"
+msgstr ""
+
+#: templates/error.html:8
+msgid "Sorry!"
+msgstr ""
+
+#: templates/error.html:11
+msgid "Вернуться на предыдущую страницу"
+msgstr ""
+
+#: templates/error.html:12
+msgid "На главную страницу"
+msgstr ""
+
+#: templates/news/list.html:22
+msgid "[ read more ]"
+msgstr ""
+
+#: templates/partials/slider.html:16
+msgid "Preview"
+msgstr ""
+
+#: templates/partials/slider.html:18
+msgid "Next"
+msgstr ""
+
+#: templates/search/author_filter.html:7
+msgid "Автор:"
+msgstr ""
+
+#: templates/search/author_filter.html:15 templates/search/parameter.html:13
+msgid "Категорії"
+msgstr ""
+
+#: templates/search/author_filter.html:27
+#: templates/search/author_filter.html:29 templates/search/parameter.html:25
+#: templates/search/parameter.html:27
+msgid "Всі категорії"
+msgstr ""
+
+#: templates/search/parameter.html:7
+msgid "Пошуковий запит"
+msgstr ""
+
+#: templates/search/parameter.html:36 templates/search/results.html:36
+#, python-format
+msgid ""
+"По запиту <span class=\"coral\">\"%(search_query)s\"</span> нічого не "
+"знайдено"
+msgstr ""
+
+#: templates/search/parameter.html:40 templates/search/results.html:40
+#, python-format
+msgid "Пошуковий запит <span class=\"coral\">\"%(search_query)s\"</span>"
+msgstr ""
+
+#: templates/search/results.html:7
+msgid "Поисковый запрос"
+msgstr ""
+
+#: templates/search/results.html:13
+msgid "Категории"
+msgstr ""
+
+#: templates/search/results.html:25 templates/search/results.html:27
+msgid "Все категории"
+msgstr ""
+
+#: templates/search/series_filter.html:8
+msgid "Серія:"
+msgstr ""
+
+#: webaccount/apps.py:8
+msgid "Account"
+msgstr ""
+
+#: webaccount/auth_backend.py:29
+msgid "There are multiple users with the given email address and password"
+msgstr ""
+
+#: webaccount/forms.py:15
+msgid "Email address"
+msgstr ""
+
+#: webaccount/forms.py:19 webaccount/forms.py:21 webaccount/forms.py:38
+#: webaccount/forms.py:40
+msgid "Password"
+msgstr ""
+
+#: webaccount/forms.py:43
+msgid "Confirm password"
+msgstr ""
+
+#: webaccount/forms.py:45
+msgid "Password again"
+msgstr ""
+
+#: webaccount/forms.py:54
+msgid "Login"
+msgstr ""
+
+#: webaccount/forms.py:67 webaccount/forms.py:117 webaccount/forms.py:188
+#: webaccount/tests.py:15
+msgid "A user with that email address already exists"
+msgstr ""
+
+#: webaccount/forms.py:75 webaccount/tests.py:379
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: webaccount/forms.py:95 webaccount/forms.py:159
+msgid "Old password"
+msgstr ""
+
+#: webaccount/forms.py:100 webaccount/forms.py:164
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive."
+msgstr ""
+
+#: webaccount/forms.py:102 webaccount/forms.py:166
+msgid "This account is inactive."
+msgstr ""
+
+#: webaccount/forms.py:230
+msgid "First name"
+msgstr ""
+
+#: webaccount/forms.py:231
+msgid "Last name"
+msgstr ""
+
+#: webaccount/forms.py:268
+msgid "Your name"
+msgstr ""
+
+#: webaccount/forms.py:269 webshop/forms.py:9 webshop/forms.py:31
+#: webshop/models.py:478 webshop/models.py:568 webshopcart/forms.py:34
+#: webshopcart/models.py:63
+msgid "Email"
+msgstr ""
+
+#: webaccount/forms.py:270
+msgid "Body of callback"
+msgstr ""
+
+#: webaccount/models.py:9
+msgctxt "user_profile"
+msgid "Note"
+msgstr ""
+
+#: webaccount/models.py:10
+msgid "Birthday"
+msgstr ""
+
+#: webaccount/models.py:13
+msgid "Male"
+msgstr ""
+
+#: webaccount/models.py:14
+msgid "Female"
+msgstr ""
+
+#: webaccount/models.py:16
+msgid "Sex"
+msgstr ""
+
+#: webaccount/models.py:18
+msgid "Company"
+msgstr ""
+
+#: webaccount/models.py:20
+msgid "Receive mailing"
+msgstr ""
+
+#: webaccount/models.py:26
+msgid "Profile"
+msgstr ""
+
+#: webaccount/models.py:27
+msgid "Profiles"
+msgstr ""
+
+#: webaccount/models.py:31
+msgid "First line of address"
+msgstr ""
+
+#: webaccount/models.py:33
+msgid "Second line of address"
+msgstr ""
+
+#: webaccount/models.py:35
+msgid "Third line of address"
+msgstr ""
+
+#: webaccount/models.py:36
+msgid "City"
+msgstr ""
+
+#: webaccount/models.py:40
+msgid "Address"
+msgstr ""
+
+#: webaccount/models.py:41
+msgid "Addresses"
+msgstr ""
+
+#: webaccount/models.py:50
+msgid "Default shipping address?"
+msgstr ""
+
+#: webaccount/models.py:52
+msgid "Number of Orders"
+msgstr ""
+
+#: webaccount/models.py:57
+msgid "User address"
+msgstr ""
+
+#: webaccount/models.py:58
+msgid "User addresses"
+msgstr ""
+
+#: webaccount/models.py:76 webaccount/models.py:82
+msgid "Phone number"
+msgstr ""
+
+#: webaccount/models.py:79
+msgid "Default phone number?"
+msgstr ""
+
+#: webaccount/models.py:83
+msgid "Phone numbers"
+msgstr ""
+
+#: webaccount/views.py:207
+msgid "Order"
+msgstr ""
+
+#: webform/forms.py:14 webform/forms.py:39 webform/forms.py:71
+#: webshop/forms.py:8 webshop/forms.py:30 webshop/models.py:477
+#: webshop/models.py:567 webshopcart/forms.py:31 webshopcart/models.py:62
+#: website/models.py:23 website/models.py:52 website/models.py:163
+#: website/models.py:218 website/models.py:249
+msgid "Name"
+msgstr ""
+
+#: webform/forms.py:14 webform/forms.py:39 webform/forms.py:71
+msgid "Error. Name"
+msgstr ""
+
+#: webform/forms.py:16 webshopcart/forms.py:27 webshopcart/forms.py:64
+#: webshopcart/forms.py:75 webshopcart/models.py:64
+msgid "Phone"
+msgstr ""
+
+#: webform/forms.py:17 webform/forms.py:41 webform/forms.py:74
+msgid "Error. Phone"
+msgstr ""
+
+#: webform/forms.py:18 webform/forms.py:42 webform/forms.py:75
+msgid "Message"
+msgstr ""
+
+#: webform/forms.py:41 webform/forms.py:74
+msgid "Rating"
+msgstr ""
+
+#: webform/forms.py:43 webform/forms.py:76
+msgid "Error. Message"
+msgstr ""
+
+#: webform/forms.py:140
+msgid "New order."
+msgstr ""
+
+#: weblayout/models.py:25 webshop/models.py:55
+msgid "Template"
+msgstr ""
+
+#: weblayout/models.py:26
+msgid "Templates"
+msgstr ""
+
+#: weblayout/models.py:31
+msgid "Header"
+msgstr ""
+
+#: weblayout/models.py:32
+msgid "Footer"
+msgstr ""
+
+#: weblayout/models.py:33
+msgid "Script"
+msgstr ""
+
+#: weblayout/models.py:44
+msgid "System Element"
+msgstr ""
+
+#: weblayout/models.py:45
+msgid "System Elements"
+msgstr ""
+
+#: weblayout/models.py:52 weblayout/models.py:53
+msgid "Menu"
+msgstr ""
+
+#: weblayout/models.py:60
+msgid "Alternative name"
+msgstr ""
+
+#: weblayout/models.py:61
+msgid "Alternative url"
+msgstr ""
+
+#: weblayout/models.py:62
+msgid "Image of menu item"
+msgstr ""
+
+#: weblayout/models.py:74
+msgid "Menu item"
+msgstr ""
+
+#: weblayout/models.py:75
+msgid "Menu items"
+msgstr ""
+
+#: webrating/models.py:22
+msgid "Comment"
+msgstr ""
+
+#: webrating/models.py:23
+msgid "Ratings and comments"
+msgstr ""
+
+#: webshop/admin.py:183
+msgid "Has new comments"
+msgstr ""
+
+#: webshop/admin.py:195
+msgid "With new comments"
+msgstr ""
+
+#: webshop/admin.py:400
+msgid "Prices"
+msgstr ""
+
+#: webshop/admin.py:403
+msgid "Statuses"
+msgstr ""
+
+#: webshop/admin.py:406 webshop/models.py:93 webshop/models.py:248
+#: webshop/models.py:297 website/models.py:58 website/models.py:169
+msgid "Description"
+msgstr ""
+
+#: webshop/admin.py:413
+msgid "SEO content"
+msgstr ""
+
+#: webshop/admin.py:433
+msgid "Mark selected products as active"
+msgstr ""
+
+#: webshop/admin.py:437
+msgid "Mark selected products as inactive"
+msgstr ""
+
+#: webshop/admin.py:529
+#, python-format
+msgid "<h1>Imported file is not in unicode: %s</h1>"
+msgstr ""
+
+#: webshop/admin.py:531
+#, python-format
+msgid "<h1>%s encountred while trying to read file: %s</h1>"
+msgstr ""
+
+#: webshop/admin.py:650
+msgid "Mark selected words as published"
+msgstr ""
+
+#: webshop/admin.py:654
+msgid "Mark selected words as unpublished"
+msgstr ""
+
+#: webshop/apps.py:8
+msgid "Shop"
+msgstr ""
+
+#: webshop/models.py:47
+msgctxt "category"
+msgid "Name"
+msgstr ""
+
+#: webshop/models.py:49 webshop/models.py:350 webshop/models.py:747
+#: website/models.py:25
+msgid "First text"
+msgstr ""
+
+#: webshop/models.py:50 webshop/models.py:351 website/models.py:26
+msgid "Second text"
+msgstr ""
+
+#: webshop/models.py:51 webshop/models.py:652 website/models.py:221
+msgid "First image"
+msgstr ""
+
+#: webshop/models.py:53 webshop/models.py:653 website/models.py:223
+msgid "Second image"
+msgstr ""
+
+#: webshop/models.py:60
+msgid "Moderators"
+msgstr ""
+
+#: webshop/models.py:61
+msgid "groups"
+msgstr ""
+
+#: webshop/models.py:73 webshop/models.py:369 webshop/models.py:621
+#: webshop/models.py:676
+msgid "Category"
+msgstr ""
+
+#: webshop/models.py:74
+msgid "Categories"
+msgstr ""
+
+#: webshop/models.py:79 website/models.py:46 website/models.py:69
+#: website/models.py:155 website/models.py:180
+msgid "Original image"
+msgstr ""
+
+#: webshop/models.py:81 webshop/models.py:84 website/models.py:161
+msgid "Large image"
+msgstr ""
+
+#: webshop/models.py:82 webshop/models.py:85 website/models.py:159
+msgid "Medium image"
+msgstr ""
+
+#: webshop/models.py:83 webshop/models.py:86 website/models.py:157
+msgid "Small image"
+msgstr ""
+
+#: webshop/models.py:87
+msgctxt "product image item"
+msgid "Name"
+msgstr ""
+
+#: webshop/models.py:88
+msgctxt "product image item"
+msgid "Title"
+msgstr ""
+
+#: webshop/models.py:91 website/models.py:56 website/models.py:167
+msgid "Weight"
+msgstr ""
+
+#: webshop/models.py:92 website/models.py:57 website/models.py:168
+msgid "Is active?"
+msgstr ""
+
+#: webshop/models.py:190
+msgid "Product Image Position"
+msgstr ""
+
+#: webshop/models.py:191
+msgid "Product Image Positions"
+msgstr ""
+
+#: webshop/models.py:197
+msgctxt "sale"
+msgid "Name"
+msgstr ""
+
+#: webshop/models.py:198 webshop/models.py:215
+msgid "Percent"
+msgstr ""
+
+#: webshop/models.py:199
+msgctxt "sale"
+msgid "Image"
+msgstr ""
+
+#: webshop/models.py:208 webshop/models.py:372
+msgid "Sale"
+msgstr ""
+
+#: webshop/models.py:209
+msgid "Sales"
+msgstr ""
+
+#: webshop/models.py:214
+msgctxt "margin"
+msgid "Name"
+msgstr ""
+
+#: webshop/models.py:222 webshop/models.py:373
+msgid "Margin"
+msgstr ""
+
+#: webshop/models.py:223
+msgid "Margins"
+msgstr ""
+
+#: webshop/models.py:228
+msgctxt "delivery"
+msgid "Code"
+msgstr ""
+
+#: webshop/models.py:229
+msgctxt "delivery"
+msgid "Name"
+msgstr ""
+
+#: webshop/models.py:230
+msgid "From mass"
+msgstr ""
+
+#: webshop/models.py:231
+msgid "To mass"
+msgstr ""
+
+#: webshop/models.py:232
+msgctxt "delivery"
+msgid "Price"
+msgstr ""
+
+#: webshop/models.py:237
+msgid "Delivery Rule"
+msgstr ""
+
+#: webshop/models.py:238
+msgid "Delivery Rules"
+msgstr ""
+
+#: webshop/models.py:245
+msgctxt "manufacturer"
+msgid "Name"
+msgstr ""
+
+#: webshop/models.py:246 webshop/models.py:295
+msgid "Slug"
+msgstr ""
+
+#: webshop/models.py:249
+msgctxt "manufacturer"
+msgid "Image"
+msgstr ""
+
+#: webshop/models.py:255 webshop/models.py:356
+msgid "Author"
+msgstr ""
+
+#: webshop/models.py:256
+msgid "Authors"
+msgstr ""
+
+#: webshop/models.py:294
+msgctxt "book series"
+msgid "Name"
+msgstr ""
+
+#: webshop/models.py:298
+msgctxt "book series"
+msgid "Image"
+msgstr ""
+
+#: webshop/models.py:304 webshop/models.py:305 webshop/models.py:358
+msgid "Series"
+msgstr ""
+
+#: webshop/models.py:343
+msgid "Product name"
+msgstr ""
+
+#: webshop/models.py:348
+msgid "Default price of product"
+msgstr ""
+
+#: webshop/models.py:349
+msgid "Активный товар"
+msgstr ""
+
+#: webshop/models.py:352
+msgid "Is top product?"
+msgstr ""
+
+#: webshop/models.py:353
+msgid "Это новинка?"
+msgstr ""
+
+#: webshop/models.py:354
+msgid "It is hit?"
+msgstr ""
+
+#: webshop/models.py:361
+msgid "Last updated date and time"
+msgstr ""
+
+#: webshop/models.py:364
+msgid "Special proposition"
+msgstr ""
+
+#: webshop/models.py:368 webshop/models.py:738
+msgid "Provider"
+msgstr ""
+
+#: webshop/models.py:370
+msgid "Weight of product"
+msgstr ""
+
+#: webshop/models.py:370
+msgid "More is good"
+msgstr ""
+
+#: webshop/models.py:371
+msgid "Mass of product"
+msgstr ""
+
+#: webshop/models.py:376
+msgid "Введіть теги по яким буде вестись пошук. Теги разділяються комами."
+msgstr ""
+
+#: webshop/models.py:465
+msgid "Products"
+msgstr ""
+
+#: webshop/models.py:476 webshop/models.py:566 webshopcart/models.py:61
+msgid "Owner"
+msgstr ""
+
+#: webshop/models.py:480 webshop/models.py:570
+msgid "Review"
+msgstr ""
+
+#: webshop/models.py:487 webshop/models.py:577
+msgid "Requires moderation"
+msgstr ""
+
+#: webshop/models.py:488 webshop/models.py:578
+msgid "Approved"
+msgstr ""
+
+#: webshop/models.py:489 webshop/models.py:579
+msgid "Rejected"
+msgstr ""
+
+#: webshop/models.py:497 webshop/models.py:587 webshopcart/models.py:66
+#: website/models.py:29 website/models.py:54 website/models.py:165
+#: website/models.py:219 website/models.py:250
+msgid "Date created"
+msgstr ""
+
+#: webshop/models.py:505
+msgid "Product Review"
+msgstr ""
+
+#: webshop/models.py:506
+msgid "Product Reviews"
+msgstr ""
+
+#: webshop/models.py:530
+msgid "Name of product price corrector"
+msgstr ""
+
+#: webshop/models.py:531
+msgid "Price of corrector"
+msgstr ""
+
+#: webshop/models.py:539
+msgid "Product Price Correction"
+msgstr ""
+
+#: webshop/models.py:540
+msgid "Product Price Corrections"
+msgstr ""
+
+#: webshop/models.py:594
+msgid "Ratings and comments for product"
+msgstr ""
+
+#: webshop/models.py:595
+msgid "Rating and comment for product"
+msgstr ""
+
+#: webshop/models.py:600
+msgid "Special proposition name"
+msgstr ""
+
+#: webshop/models.py:601
+msgid "Image of special proposition"
+msgstr ""
+
+#: webshop/models.py:610
+msgid "Special Proposition"
+msgstr ""
+
+#: webshop/models.py:611
+msgid "Special Propositions"
+msgstr ""
+
+#: webshop/models.py:616
+msgid "Product parameter name"
+msgstr ""
+
+#: webshop/models.py:617
+msgid "First image of parameter"
+msgstr ""
+
+#: webshop/models.py:619
+msgid "Second image of parameter"
+msgstr ""
+
+#: webshop/models.py:622
+msgid "Prefix"
+msgstr ""
+
+#: webshop/models.py:623
+msgid "Suffix"
+msgstr ""
+
+#: webshop/models.py:624
+msgid "Weight of parameter"
+msgstr ""
+
+#: webshop/models.py:633 webshop/models.py:684
+msgid "Product Parameter"
+msgstr ""
+
+#: webshop/models.py:634
+msgid "Product Parameters"
+msgstr ""
+
+#: webshop/models.py:639
+msgid "Name of range"
+msgstr ""
+
+#: webshop/models.py:640
+msgid "Weight of parameter range"
+msgstr ""
+
+#: webshop/models.py:641
+msgid "Parameter"
+msgstr ""
+
+#: webshop/models.py:649
+msgid "Product parameter"
+msgstr ""
+
+#: webshop/models.py:651 webshop/models.py:695
+msgid "Value of parameter"
+msgstr ""
+
+#: webshop/models.py:654
+msgid "Weight of parameter value"
+msgstr ""
+
+#: webshop/models.py:656
+msgid "Parameter range"
+msgstr ""
+
+#: webshop/models.py:670
+msgid "Product Parameter Available Value"
+msgstr ""
+
+#: webshop/models.py:671
+msgid "Product Parameter Available Values"
+msgstr ""
+
+#: webshop/models.py:709
+msgid "Product Parameter Value"
+msgstr ""
+
+#: webshop/models.py:710
+msgid "Product Parameter Values"
+msgstr ""
+
+#: webshop/models.py:715
+msgid "Name of currency"
+msgstr ""
+
+#: webshop/models.py:716
+msgid "Short name of currency"
+msgstr ""
+
+#: webshop/models.py:723 webshop/models.py:730
+msgid "Currency"
+msgstr ""
+
+#: webshop/models.py:724
+msgid "Currencies"
+msgstr ""
+
+#: webshop/models.py:729
+msgid "Name of provider"
+msgstr ""
+
+#: webshop/models.py:731
+msgid "Coefficient to main currency"
+msgstr ""
+
+#: webshop/models.py:739
+msgid "Providers"
+msgstr ""
+
+#: webshop/models.py:744
+msgid "Name of prefilter"
+msgstr ""
+
+#: webshop/models.py:745
+msgid "URL of prefilter"
+msgstr ""
+
+#: webshop/models.py:746
+msgid "Active?"
+msgstr ""
+
+#: webshop/models.py:748
+msgid "Secord text"
+msgstr ""
+
+#: webshop/models.py:749
+msgid "Original URL"
+msgstr ""
+
+#: webshop/models.py:759
+msgid "PreFilter"
+msgstr ""
+
+#: webshop/models.py:760
+msgid "PreFilters"
+msgstr ""
+
+#: webshop/models.py:764
+msgid "Value"
+msgstr ""
+
+#: webshop/models.py:766
+msgid "Display order"
+msgstr ""
+
+#: webshop/models.py:767
+msgid "Сортування йде від меншого до більшого, числа повинні бути більше нуля"
+msgstr ""
+
+#: webshop/models.py:768
+msgid "Is published?"
+msgstr ""
+
+#: webshop/models.py:774
+msgid "Word of fast search"
+msgstr ""
+
+#: webshop/models.py:775
+msgid "Words of fast search"
+msgstr ""
+
+#: webshop/views.py:162
+msgid "URL error."
+msgstr ""
+
+#: webshopcart/api.py:75
+msgid "Product not found"
+msgstr ""
+
+#: webshopcart/api.py:78
+msgid "ProductPriceCorrector not found"
+msgstr ""
+
+#: webshopcart/api.py:133
+msgid "ProductPriceCorrector not in cart"
+msgstr ""
+
+#: webshopcart/api.py:136
+msgid "Product not in cart"
+msgstr ""
+
+#: webshopcart/api.py:139
+msgid "Cart not found"
+msgstr ""
+
+#: webshopcart/forms.py:11 webshopcart/models.py:65
+msgid "Note"
+msgstr ""
+
+#: webshopcart/models.py:21 webshopcart/models.py:103
+msgid "Cart"
+msgstr ""
+
+#: webshopcart/models.py:22
+msgid "Quantity of products"
+msgstr ""
+
+#: webshopcart/models.py:31
+msgid "Price corrector"
+msgstr ""
+
+#: webshopcart/models.py:54
+msgid "Product in Cart"
+msgstr ""
+
+#: webshopcart/models.py:55
+msgid "Products in Carts"
+msgstr ""
+
+#: webshopcart/models.py:67 website/models.py:30 website/models.py:55
+#: website/models.py:166 website/models.py:220 website/models.py:251
+msgid "Date updated"
+msgstr ""
+
+#: webshopcart/models.py:68
+msgid "Is complete?"
+msgstr ""
+
+#: webshopcart/models.py:69
+msgid "Is paid?"
+msgstr ""
+
+#: webshopcart/models.py:70
+msgid "Order price"
+msgstr ""
+
+#: webshopcart/models.py:73
+msgid "Delivery rule"
+msgstr ""
+
+#: webshopcart/models.py:74
+msgid "Shipping address"
+msgstr ""
+
+#: webshopcart/models.py:104
+msgid "Carts"
+msgstr ""
+
+#: webshopcart/views.py:211
+msgid "New order"
+msgstr ""
+
+#: website/admin.py:83
+msgid "Product SEO"
+msgstr ""
+
+#: website/admin.py:88
+msgid "Category SEO"
+msgstr ""
+
+#: website/admin.py:93
+msgid "Static page SEO"
+msgstr ""
+
+#: website/models.py:40
+msgid "Static Page"
+msgstr ""
+
+#: website/models.py:41
+msgid "Static Pages"
+msgstr ""
+
+#: website/models.py:149
+msgid "Gallery Image Position"
+msgstr ""
+
+#: website/models.py:150
+msgid "Gallery Image Positions"
+msgstr ""
+
+#: website/models.py:170 website/models.py:258
+msgid "Banner"
+msgstr ""
+
+#: website/models.py:212
+msgid "Banner Image Position"
+msgstr ""
+
+#: website/models.py:213
+msgid "Banner Image Positions"
+msgstr ""
+
+#: website/models.py:234
+msgid "Galleries"
+msgstr ""
+
+#: website/models.py:259
+msgid "Banners"
+msgstr ""
+
+#: website/models.py:274
+msgid "Company name"
+msgstr ""
+
+#: website/models.py:275
+msgid "Emails"
+msgstr ""
+
+#: website/models.py:277
+msgid "Title for product"
+msgstr ""
+
+#: website/models.py:278
+msgid "product title"
+msgstr ""
+
+#: website/models.py:281
+msgid "Description for product"
+msgstr ""
+
+#: website/models.py:282
+msgid "product desc"
+msgstr ""
+
+#: website/models.py:285
+msgid "Keywords for product"
+msgstr ""
+
+#: website/models.py:286
+msgid "product keywords"
+msgstr ""
+
+#: website/models.py:290
+msgid "Title for category"
+msgstr ""
+
+#: website/models.py:291
+msgid "category title"
+msgstr ""
+
+#: website/models.py:294
+msgid "Description for category"
+msgstr ""
+
+#: website/models.py:295
+msgid "category desc"
+msgstr ""
+
+#: website/models.py:298
+msgid "Keywords for category"
+msgstr ""
+
+#: website/models.py:299
+msgid "category keywords"
+msgstr ""
+
+#: website/models.py:303
+msgid "Title for static page"
+msgstr ""
+
+#: website/models.py:304
+msgid "static title"
+msgstr ""
+
+#: website/models.py:307
+msgid "Description for static page"
+msgstr ""
+
+#: website/models.py:308
+msgid "static"
+msgstr ""
+
+#: website/models.py:311
+msgid "Keywords for static page"
+msgstr ""
+
+#: website/models.py:312
+msgid "static keys"
+msgstr ""
+
+#: website/models.py:315
+msgid "Title for news"
+msgstr ""
+
+#: website/models.py:316
+msgid "news title"
+msgstr ""
+
+#: website/models.py:318
+msgid "Description for news"
+msgstr ""
+
+#: website/models.py:319
+msgid "news description"
+msgstr ""
+
+#: website/models.py:321
+msgid "Keywords for news"
+msgstr ""
+
+#: website/models.py:322
+msgid "news keys"
+msgstr ""
+
+#: website/models.py:329 website/models.py:330
+msgid "Global settings"
+msgstr ""
+
+#: website/models.py:342
+msgid "Variable"
+msgstr ""
+
+#: website/models.py:343
+msgid "Variables"
+msgstr ""
+
+#: website/views.py:71
+msgid "Home page"
+msgstr ""
+
+#: website/views.py:198
+msgid "Callback"
+msgstr ""
+
+#~ msgid "^search/$"
+#~ msgstr "^en/search/$"

@@ -1,0 +1,183 @@
+@font-face {
+    font-family: 'flexslider-icon';
+    src: url('../fonts/flexslider-icon.eot');
+    src: url('../fonts/flexslider-icon.eot?#iefix') format('embedded-opentype'), url('../fonts/flexslider-icon.woff') format('woff'), url('../fonts/flexslider-icon.ttf') format('truetype'), url('../fonts/flexslider-icon.svg#flexslider-icon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.slides,
+.slides > li,
+.flex-control-nav,
+.flex-direction-nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flexslider .slides > li,
+.flexslider-product .slides > li,
+.flexslider-recent .slides > li {
+  display: none;
+  -webkit-backface-visibility: hidden;
+}
+.flexslider .slides img {
+    margin: 15px;
+  display: block;
+    max-width: 140px;
+    max-height: 200px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.flexslider-product .slides img {
+/ / height: 50 px;
+    max-width: 55px !important;
+    box-shadow: none !important;
+}
+
+.flex-next, .flex-prev {
+    outline: none;
+}
+
+.flexslider,
+.flexslider-product,
+.flexslider-recent {
+    zoom: 1;
+    margin: 0;
+    position: relative;
+    border-radius: 4px;
+    background: #ffffff;
+    -moz-border-radius: 4px;
+    border: 4px solid #ffffff;
+    -webkit-border-radius: 4px;
+    -webkit-box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+    -o-box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: '' 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.flex-direction-nav a {
+    top: 55%;
+    opacity: 0;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    display: block;
+    cursor: pointer;
+    overflow: hidden;
+    margin: -20px 0 0;
+    position: absolute;
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+.flexslider-product .flex-direction-nav a {
+    top: 60%;
+}
+
+.flex-direction-nav a:before {
+    font-size: 20px;
+    margin: 2px 8px;
+    content: '\f001';
+    display: inline-block;
+    color: rgba(255, 255, 255, 1);
+    font-family: "flexslider-icon";
+}
+
+.flexslider-product .flex-direction-nav a:before {
+    margin: -2px 8px;
+    color: #ee414f;
+}
+
+.flex-direction-nav a.flex-next:before {
+    content: '\f002';
+}
+
+.flex-direction-nav .flex-prev {
+    left: 32px;
+    opacity: 1;
+    background: #ee414f;
+    border-radius: 100px;
+}
+
+.flexslider-product .flex-direction-nav .flex-prev {
+    left: -32px;
+    background: none;
+}
+
+.flexslider-recent .flex-direction-nav .flex-prev {
+    left: -25px;
+}
+
+.flex-direction-nav .flex-next {
+    opacity: 1;
+    right: 32px;
+    text-align: right;
+    background: #ee414f;
+    border-radius: 100px;
+}
+
+.flexslider-product .flex-direction-nav .flex-next {
+    right: -32px;
+    background: none;
+}
+
+.flexslider-recent .flex-direction-nav .flex-next {
+    right: -25px;
+}
+
+.flex-direction-nav .flex-disabled {
+    z-index: -1;
+    cursor: default;
+    opacity: 0 !important;
+    filter: alpha(opacity=0);
+}
+.flex-control-nav {
+  width: 100%;
+    bottom: -40px;
+  position: absolute;
+  text-align: center;
+}
+.flex-control-nav li {
+  zoom: 1;
+  margin: 0 6px;
+  display: inline-block;
+}
+.flex-control-paging li a {
+  width: 11px;
+  height: 11px;
+  display: block;
+  cursor: pointer;
+    background: #666;
+  text-indent: -9999px;
+    background: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -o-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.flex-control-paging li a.flex-active {
+    background: #000;
+  cursor: default;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+@media screen and (max-width: 860px) {
+    .flex-direction-nav .flex-prev {
+        opacity: 1;
+        left: 10px;
+    }
+
+    .flex-direction-nav .flex-next {
+        opacity: 1;
+        right: 10px;
+    }
+}

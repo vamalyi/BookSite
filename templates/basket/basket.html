@@ -1,0 +1,461 @@
+{% extends "layout.html" %}
+{% load i18n %}
+{% load staticfiles %}
+{% load history_tags %}
+
+{% block layout %}
+
+<!-- ARTICLE -->
+                    
+{% include "partials/category_menu.html" %}
+
+<div class="col-sm-12">
+
+    <!-- BREADCRUMBS -->
+
+    <div class="breadcrumbs">
+        <a href="/" class="dark">{% trans "Головна" %}</a> > <span class="coral">{% trans "Кошик" %}</span>
+    </div>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="article-title product-page">
+        <p class="dark">{% trans "Кошик" %}</p>
+    </div>
+
+    <div class="cart col-sm-12">
+        <div class="row">
+
+            <div id="basket_content">
+                {% include 'basket/partials/basket_content.html' %}
+            </div>
+
+            <div class="request-cart col-sm-12">
+                <div class="row">
+                    {% if not user.is_authenticated %}
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" {% if tab == 'default' or tab == 'order' %}
+                            class="active"{% endif %}>
+                                <a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                                {% trans "Оформить без регистрации" %}
+                            </a></li>
+                            <li role="presentation"{% if tab == 'login_order' %} class="active"{% endif %}>
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                                {% trans "Войти и оформить" %}
+                            </a></li>
+                            <li role="presentation"{% if tab == 'registration_order' %} class="active"{% endif %}>
+                            <a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+                                {% trans "Зарегистрироваться и оформить" %}
+                            </a></li>
+                        </ul>
+                    {% endif %}
+                    <div class="form-cart col-xs-4">
+                        <div class="article-title">
+                            <p class="dark">{% trans "Оформлення замовлення" %}</p>
+                        </div>
+
+                        {% if user.is_authenticated %}
+                        {{ form.non_field_errors }}
+                        <form action="" method="post" class="form-purchase">
+                            {% csrf_token %}
+                            {% for error in form.username.errors %}
+                            <span class="error-block"><i
+                                    class="icon-exclamation-sign"></i> {{ error }}</span>
+                            {% endfor %}
+                            {{ form.username }}
+                            {% for error in form.phone.errors %}
+                            <span class="error-block"><i
+                                    class="icon-exclamation-sign"></i> {{ error }}</span>
+                            {% endfor %}
+                            {{ form.phone }}
+                            {{ form.email }}
+                            {% for error in form.delivery.errors %}
+                            <span class="error-block"><i
+                                    class="icon-exclamation-sign"></i> {{ error }}</span>
+                            {% endfor %}
+                            {{ form.delivery }}
+                            <div class="form-group select-item__city" style="width: 97%; margin-top:10px">
+                                <select id="select_city" class="form-control hidden" disabled>
+                                    <option value="">{% trans "Оберіть місто" %}</option>
+                                </select>
+                            </div>
+                            <div class="form-group select-item__warehouses" style="width: 97%;">
+                                <select id="select_warehouses" class="form-control hidden" disabled>
+                                    <option value="">{% trans "Оберіть відділення" %}</option>
+                                </select>
+                            </div>
+                            {{ form.shipping_address }}
+                            {% for error in form.description.errors %}
+                            <span class="error-block"><i
+                                    class="icon-exclamation-sign"></i> {{ error }}</span>
+                            {% endfor %}
+                            {{ form.description }}
+                            {{ form.redirect_url }}
+                            {{ form.delivery_city }}
+                            {{ form.delivery_warehouses }}
+                            <input name="order_submit" type="hidden">
+                        </form>
+                        {% else %}
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane{% if tab == 'order' or tab == 'default' %} active{% endif %}" id="home">
+                                    {{ form.non_field_errors }}
+                                    <form action="" method="post" name="formCartSend" class="form-purchase">
+                                        {% csrf_token %}
+                                        {% for error in form.username.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ form.username }}
+                                        {% for error in form.phone.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ form.phone }}
+                                        {% for error in form.email.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ form.email }}
+                                        {% for error in form.delivery.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ form.delivery }}
+                                        <div class="form-group select-item__city select-item__noactive" style="width: 97%; margin-top:10px">
+                                            <select id="select_city" class="form-control hidden"
+                                                    style="font-size:12px;color:#000;" disabled>
+                                                <option value="">{% trans "Оберіть місто" %}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group select-item__warehouses select-item__noactive" style="width: 97%;">
+                                            <select id="select_warehouses" class="form-control hidden"
+                                                    style="font-size:12px;color:#000;" disabled>
+                                                <option value="">{% trans "Оберіть відділення" %}</option>
+                                            </select>
+                                        </div>
+                                        {{ form.shipping_address }}
+                                        {% for error in form.description.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ form.description }}
+                                        {{ form.redirect_url }}
+                                        {{ form.delivery_city }}
+                                        {{ form.delivery_warehouses }}
+                                        <input name="order_submit" type="hidden">
+                                    </form>
+                                </div>
+                                <div role="tabpanel" class="tab-pane{% if tab == 'login_order' %} active{% endif %}" id="profile">
+                                    {{ login_form.non_field_errors }}
+                                    <form action="#" method="post" name="formCartSend" class="form-purchase">
+                                        {% csrf_token %}
+                                        {% for error in login_form.username.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ login_form.username }}
+                                        {% for error in login_form.password.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ login_form.password }}
+                                        {% for error in login_form.phone.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ login_form.phone }}
+                                        {% for error in login_form.delivery.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ login_form.delivery }}
+                                        <div class="form-group select-item__city select-item__noactive" style="width: 97%; margin-top:10px">
+                                            <select id="select_city" class="form-control hidden"
+                                                    style="font-size:12px;color:#000;" disabled>
+                                                <option value="">{% trans "Оберіть місто" %}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group select-item__warehouses select-item__noactive" style="width: 97%;">
+                                            <select id="select_warehouses" class="form-control hidden"
+                                                    style="font-size:12px;color:#000;" disabled>
+                                                <option value="">{% trans "Оберіть відділення" %}</option>
+                                            </select>
+                                        </div>
+                                        {{ login_form.shipping_address }}
+                                        {% for error in login_form.description.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ login_form.description }}
+                                        {{ login_form.redirect_url }}
+                                        {{ login_form.delivery_city }}
+                                        {{ login_form.delivery_warehouses }}
+                                        <input name="login_submit" type="hidden">
+                                    </form>
+                                </div>
+                                <div role="tabpanel" class="tab-pane{% if tab == 'registration_order' %} active{% endif %}" id="messages">
+                                    {{ registration_form.non_field_errors }}
+                                    <form action="#" method="post" name="formCartSend" class="form-purchase">
+                                        {% csrf_token %}
+                                        {% for error in registration_form.username.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ registration_form.username }}
+                                        {% for error in registration_form.email.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ registration_form.email }}
+                                        {% for error in registration_form.password1.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ registration_form.password1 }}
+                                        {% for error in registration_form.password2.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ registration_form.password2 }}
+                                        {% for error in registration_form.phone.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ registration_form.phone }}
+                                        {% for error in registration_form.delivery.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ registration_form.delivery }}
+                                        <div class="form-group select-item__city select-item__noactive" style="width: 97%; margin-top:10px">
+                                            <select id="select_city" class="form-control hidden"
+                                                    style="font-size:12px;color:#000;" disabled>
+                                                <option value="">{% trans "Оберіть місто" %}</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group select-item__warehouses select-item__noactive" style="width: 97%;">
+                                            <select id="select_warehouses" class="form-control hidden"
+                                                    style="font-size:12px;color:#000;" disabled>
+                                                <option value="">{% trans "Оберіть відділення" %}</option>
+                                            </select>
+                                        </div>
+                                        {{ registration_form.shipping_address }}
+                                        {% for error in registration_form.description.errors %}
+                                        <span class="error-block"><i
+                                                class="icon-exclamation-sign"></i> {{ error }}</span>
+                                        {% endfor %}
+                                        {{ registration_form.description }}
+                                        {{ registration_form.redirect_url }}
+                                        {{ registration_form.delivery_city }}
+                                        {{ registration_form.delivery_warehouses }}
+                                        <input name="registration_submit" type="hidden">
+                                    </form>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="final-cart col-sm-3">
+                        <div class="article-title small">
+                            <p class="dark">{% trans "Всього" %}</p>
+                        </div>
+                        <div class="final-cart-amount">{% blocktrans with price=total_price|floatformat:"2" %}Товари на суму <span id="total_price_value">{{ price }} грн</span>{% endblocktrans %}</div>
+                        <div class="final-cart-delivery">{% blocktrans %}Вартість доставки <span id="delivery_value">0 грн</span>{% endblocktrans %}</div>
+                        <div class="final-cart-total"> {% blocktrans with price=total_price|floatformat:"2" %}До сплати <span id="price_with_delivery_value">{{ price }} грн</span>{% endblocktrans %}</div>
+                        <input value="{% trans "Замовлення підтверджую" %}" type="button" id="order_submit">
+                        <div class="terms">
+                            <p>{% trans "Підтверджуючи замовлення, я приймаю умови угоди" %}</p>
+                        </div>
+                    </div>
+                    <!--<div class="questions col-sm-4 col-sm-offset-1">-->
+                        <!--<a href="#"><p class="questions-preview dark">lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et</p></a>-->
+                        <!--<a href="#"><p class="questions-preview dark">lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et</p></a>-->
+                        <!--<a href="#"><p class="questions-preview dark">lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et</p></a>-->
+                        <!--<a href="#"><p class="questions-preview dark">lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et</p></a>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="article-title">
+        <div class="row">
+            <div class="col-sm-4">
+                <p class="coral">Останні перегляди</p>
+            </div>
+            <div class="col-sm-8 line product-page"></div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        {% block recently_products %}
+            {% recently_viewed_products %}
+        {% endblock %}
+    </div>
+</div>  
+{% endblock %}
+{% block extra_scripts %}
+    {{ block.super }}
+    <script src="{% static "js/bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static 'system/js/basket.js' %}"></script>
+    <script type="text/javascript">
+        var csrftokenn = function(context)
+        {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, context.length + 1) == (context + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(context.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }('csrftoken');
+        $('.product_button').click(function() {
+            var t = this;
+            $.post("/api/del_product/",
+                    {
+                        'id': this.dataset.id,
+                        'price_corrector_id':this.dataset.corrector,
+                        'csrfmiddlewaretoken':csrftokenn
+                    },
+                    function(data)
+                    {
+                        if (data.result === true) {
+                            var basket_count_span = $('#basket_count');
+                            if (basket_count_span.html() != undefined) {
+                                if (data.data.count < 1) {
+                                    basket_count_span.html('');
+                                } else {
+                                    basket_count_span.html(data.data.count);
+                                }
+                            } else {
+                                $('#global_basket_button').append('<span id="basket_count">1</span>');
+                            }
+                            // $('#basket_content').html(data.data.content_html);
+                            $(t).closest('.product-cart').remove();
+                            if ($('.product-cart').length == 0) {
+                                $('#order-content').remove();
+                            }
+                            $('#total_price_value').html(data.data.sum.toFixed(2) + ' грн');
+                            var delivery_price = parseFloat($('#delivery_value').html().replace('грн', ''));
+                            $('#price_with_delivery_value').html((parseFloat(data.data.sum) + delivery_price).toFixed(2));
+                        }
+                    })
+        });
+        $('.product_count').change(function() {
+            var input_field = this;
+            var data = {
+                'id': input_field.dataset.id,
+                'count': input_field.value,
+                'csrfmiddlewaretoken': csrftokenn
+            };
+            $.post("/api/set_product/", data, function (data) {
+                if (data.result === true) {
+                    var basket_count_span = $('#basket_count');
+                    if (basket_count_span.html() != undefined) {
+                        if (data.data.count < 1) {
+                            basket_count_span.html('');
+                        } else {
+                            basket_count_span.html(data.data.count);
+                        }
+                    } else {
+                        $('#global_basket_button').append('<span id="basket_count">1</span>');
+                    }
+                    $('#total_price_value').html(data.data.sum.toFixed(2) + ' грн');
+                    var delivery_price = parseFloat($('#delivery_value').html().replace('грн', ''));
+                    $('#price_with_delivery_value').html((parseFloat(data.data.sum) + delivery_price).toFixed(2));
+                }
+            }
+            )
+        });
+        $('.dec').click(function () {
+            var k = true;
+            if ($(this).parent().children('input')[0].value < 2) {
+                k = false
+            }
+            $(this).parent().children('input').val(function (i, oldval) {
+                if (oldval > 1) {
+                    return --oldval;
+                } else {
+                    return oldval;
+                }
+            });
+            if (k) {
+                var input_field = $(this).parent().children('input')[0];
+                var data = {
+                    'id': input_field.dataset.id,
+                    'count': input_field.value,
+                    'csrfmiddlewaretoken': csrftokenn
+                };
+                $.post("/api/set_product/", data, function (data) {
+                    if (data.result === true) {
+                        var basket_count_span = $('#basket_count');
+                        if (basket_count_span.html() != undefined) {
+                            if (data.data.count < 1) {
+                                basket_count_span.html('');
+                            } else {
+                                basket_count_span.html(data.data.count);
+                            }
+                        } else {
+                            $('#global_basket_button').append('<span id="basket_count">1</span>');
+                        }
+                        $('#total_price_value').html(data.data.sum.toFixed(2) + ' грн');
+                        var delivery_price = parseFloat($('#delivery_value').html().replace('грн', ''));
+                        $('#price_with_delivery_value').html((parseFloat(data.data.sum) + delivery_price).toFixed(2));
+                    }
+                    }
+                )
+            }
+        });
+        $('.inc').click(function () {
+            $(this).parent().children('input').val(function (i, oldval) {
+                return ++oldval;
+            });
+            var input_field = $(this).parent().children('input')[0];
+            var data = {
+                'id': input_field.dataset.id,
+                'count': input_field.value,
+                'csrfmiddlewaretoken': csrftokenn
+            };
+            $.post("/api/set_product/", data, function (data) {
+                        if (data.result === true) {
+                            var basket_count_span = $('#basket_count');
+                            if (basket_count_span.html() != undefined) {
+                                if (data.data.count < 1) {
+                                    basket_count_span.html('');
+                                } else {
+                                    basket_count_span.html(data.data.count);
+                                }
+                            } else {
+                                $('#global_basket_button').append('<span id="basket_count">1</span>');
+                            }
+                            $('#total_price_value').html(data.data.sum.toFixed(2) + ' грн');
+                            var delivery_price = parseFloat($('#delivery_value').html().replace('грн', ''));
+                            $('#price_with_delivery_value').html((parseFloat(data.data.sum) + delivery_price).toFixed(2));
+                        }
+                    }
+            )
+        });
+        $('#order_submit').click(function(){
+            var form_send = $('.tab-pane.active .form-purchase');
+            if (form_send.length == 1) {
+                form_send[0].submit();
+            } else if (form_send.length == 0) {
+                form_send = $('.form-purchase');
+                if (form_send.length == 1) {
+                    form_send[0].submit();
+                }
+            } else {
+                console.log('Error form send');
+            }
+            console.log('send order');
+        })
+    </script>
+{% endblock %}

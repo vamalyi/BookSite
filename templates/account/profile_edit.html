@@ -1,0 +1,90 @@
+{% extends "account/profile_base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load parameter_values_tags %}
+{% load widget_tweaks %}
+
+{% block tabcontent %}
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-error control-group error col-md-8 col-md-offset-2">
+                        <span class="help-inline"><i class="icon-exclamation-sign"></i> {{ error }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <form id="login_form" action="{% url "account:edit" %}" method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                {% for inline in inlines %}
+                    {{ inline.management_form }}
+                    {{ inline.non_form_errors }}
+                {% endfor %}
+                <div id="addresses_forms">
+                    {% for foo in inlines.0 %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                {% trans "Адреса" %}
+                            </div>
+                            <div class="panel-body">
+                                {{ foo|crispy }}
+                                {#                            {% render_field foo.line1 style="color:blue;" %}#}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <div id="phone_numbers_forms">
+                    {% for foo in inlines.1 %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                {% trans "Phone" %}
+                            </div>
+                            <div class="panel-body">
+                                {{ foo|crispy }}
+                                {#                            {% render_field foo.line1 style="color:blue;" %}#}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <hr>
+                <button type="submit" style="width: auto">
+                    {% trans 'Save' %}</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock tabcontent %}
+{% block extra_scripts %}
+    {{ block.super }}
+    <script>
+        $(window).load(function () {
+
+            var empty_form = {
+                "addresses": "<div class='panel panel-default'><div class='panel-heading'>Address</div><div class='panel-body'>{{ inlines.0.empty_form|crispy|inline|safe }}</div></div>".replace(/\s{2,}/g, ' '),
+                "phone_numbers": "<div class='panel panel-default'><div class='panel-heading'>Phone</div><div class='panel-body'>{{ inlines.1.empty_form|crispy|inline|safe }}</div></div>".replace(/\s{2,}/g, ' ')
+            };
+
+            $('.js_add_address').on('click', function (e) {
+                e.preventDefault();
+                var code = 'addresses';
+                var total_forms = $('#id_' + code + '-TOTAL_FORMS');
+                var value_id = total_forms.val();
+                var new_value = empty_form[code].replace(/__prefix__/g, value_id);
+                $('#' + code + '_forms').append(new_value);
+                total_forms.val(parseInt(total_forms.val()) + 1);
+            });
+            $('.js_add_phone').on('click', function (e) {
+                e.preventDefault();
+                var code = 'phone_numbers';
+                var total_forms = $('#id_' + code + '-TOTAL_FORMS');
+                var value_id = total_forms.val();
+                var new_value = empty_form[code].replace(/__prefix__/g, value_id);
+                $('#' + code + '_forms').append(new_value);
+                total_forms.val(parseInt(total_forms.val()) + 1);
+            });
+        })
+    </script>
+{% endblock %}

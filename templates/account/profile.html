@@ -1,0 +1,109 @@
+{% extends "account/profile_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block back %}{% endblock %}
+
+{% block tabcontent %}
+
+    <!-- BREADCRUMBS -->
+
+    {% block breadcrumbs %}
+        <div class="breadcrumbs">
+            <a href="/" class="dark">{% trans "Головна" %}</a> > <span class="coral">Особистий кабінет</span>
+        </div>
+    {% endblock %}
+
+    <div class="article-title product-page" style="margin-bottom:20px">
+        <p class="dark">Особистий кабінет</p>
+    </div>
+    <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url "account:profile_orders" %}"><img src="{% static "images/account-ico-1.png" %}" alt="Історія замовлень"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="{% url "account:profile_orders" %}" style="color:black;text-decoration:underline">{% trans "Історія замовлень" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Статус та історія Ваших замовлень</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                 <a href="{% url "account:edit" %}"><img src="{% static "images/account-ico-3.png" %}" alt="Особисті дані"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="{% url "account:edit" %}" style="color:black;text-decoration:underline">{% trans "Особисті дані" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Ваше ім'я, пошта, адреса, телефон та інше</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url "account:settings" %}"><img src="{% static "images/account-ico-4.png" %}" alt="Налаштування"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="{% url "account:settings" %}" style="color:black;text-decoration:underline">{% trans "Налаштування" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Змінити пароль до особистого кабінету</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url "account:wishlist:wishlists-detail" %}"><img src="{% static "images/account-ico-5.png" %}" alt="Список бажань"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="{% url "account:wishlist:wishlists-detail" %}" style="color:black;text-decoration:underline">{% trans "Список бажань" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Збережіть книги, що вас зацікавили</p>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="/akcii/"><img src="{% static "images/account-ico-5.png" %}" alt="Aкції"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="/akcii/" style="color:black;text-decoration:underline">{% trans "Акції магазину" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Слідкуйте за останніми акціями магазину</p>
+            </div>
+        </div>
+    </div> -->
+    <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url "account:callback" %}"><img src="{% static "images/account-ico-7.png" %}" alt="Зв'язатися з нами"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="{% url "account:callback" %}" style="color:black;text-decoration:underline">{% trans "Зв'язатися з нами" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Залишились питання? Напишіть нам</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url "home_page" %}"><img src="{% static "images/account-ico-8.png" %}" alt="Назад до магазину"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="{% url "home_page" %}" style="color:black;text-decoration:underline">{% trans "Назад до магазину" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Повернутися до покупок</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3" style="margin: 20px 0">
+        <div class="row">
+            <div class="col-sm-4">
+                <a href="{% url "account:logout" %}"><img src="{% static "images/account-ico-9.png" %}" alt="Назад до магазину"></a>
+            </div>
+            <div class="col-sm-8">
+                <a href="{% url "account:logout" %}" style="color:black;text-decoration:underline">{% trans "Вихід" %}</a>
+                <p style="color:#c7c7c7;font-size:12px;margin-top:7px">Вихід з особистого кабінету</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock tabcontent %}
